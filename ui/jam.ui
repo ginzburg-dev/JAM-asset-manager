@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>jam</class>
+ <widget class="QMainWindow" name="jam">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -27,7 +27,7 @@
    </size>
   </property>
   <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonTextBesideIcon</enum>
+   <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <property name="animated">
    <bool>false</bool>
@@ -109,7 +109,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/new_scene.png</normaloff>icons/new_scene.png</iconset>
+           <normaloff>../icons/new_scene.png</normaloff>../icons/new_scene.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -159,7 +159,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/update.png</normaloff>icons/update.png</iconset>
+           <normaloff>../icons/update.png</normaloff>../icons/update.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -206,7 +206,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/import.png</normaloff>icons/import.png</iconset>
+           <normaloff>../icons/import.png</normaloff>../icons/import.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -253,7 +253,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/publish.png</normaloff>icons/publish.png</iconset>
+           <normaloff>../icons/publish.png</normaloff>../icons/publish.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -300,7 +300,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/check.png</normaloff>icons/check.png</iconset>
+           <normaloff>../icons/check.png</normaloff>../icons/check.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -347,7 +347,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/denoiser_arrows.png</normaloff>icons/denoiser_arrows.png</iconset>
+           <normaloff>../icons/denoiser_arrows.png</normaloff>../icons/denoiser_arrows.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -400,7 +400,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/goto.png</normaloff>icons/goto.png</iconset>
+           <normaloff>../icons/goto.png</normaloff>../icons/goto.png</iconset>
          </property>
         </widget>
        </item>
@@ -414,7 +414,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/clipboard.png</normaloff>icons/clipboard.png</iconset>
+           <normaloff>../icons/clipboard.png</normaloff>../icons/clipboard.png</iconset>
          </property>
         </widget>
        </item>
@@ -442,7 +442,7 @@
         <widget class="QComboBox" name="comboBox_projName">
          <item>
           <property name="text">
-           <string>Kids</string>
+           <string>Fixies5</string>
           </property>
          </item>
          <item>
@@ -452,7 +452,7 @@
          </item>
          <item>
           <property name="text">
-           <string/>
+           <string>Kids</string>
           </property>
          </item>
         </widget>
@@ -484,7 +484,7 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="elideMode">
         <enum>Qt::ElideRight</enum>
@@ -616,7 +616,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/import.png</normaloff>icons/import.png</iconset>
+                <normaloff>../icons/import.png</normaloff>../icons/import.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -651,7 +651,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/publish.png</normaloff>icons/publish.png</iconset>
+                <normaloff>../icons/publish.png</normaloff>../icons/publish.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -702,7 +702,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
+                <normaloff>../icons/refresh.png</normaloff>../icons/refresh.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -878,52 +878,7 @@
                 </column>
                 <item>
                  <property name="text">
-                  <string>dacha</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>garden</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>house</string>
-                  </property>
-                 </item>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>appartment</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>kitchen</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>hall</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>gosha_room</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>mira_room</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>hallway</string>
-                  </property>
-                 </item>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>yard</string>
+                  <string>childrenroom</string>
                  </property>
                  <item>
                   <property name="text">
@@ -935,16 +890,86 @@
                    <string>evening</string>
                   </property>
                  </item>
+                 <item>
+                  <property name="text">
+                   <string>night</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>new_year_table</string>
+                   </property>
+                  </item>
+                 </item>
                 </item>
                 <item>
                  <property name="text">
-                  <string>park</string>
+                  <string>kitchen</string>
                  </property>
                  <item>
                   <property name="text">
                    <string>day</string>
                   </property>
                  </item>
+                 <item>
+                  <property name="text">
+                   <string>morning</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>livingroom</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>day</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>corridor</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>day</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>electrical</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bathroom</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>main</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>inside_device</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>main</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>flash</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string/>
+                 </property>
                 </item>
                </widget>
               </item>
@@ -1069,7 +1094,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/new_scene.png</normaloff>icons/new_scene.png</iconset>
+                <normaloff>../icons/new_scene.png</normaloff>../icons/new_scene.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1098,7 +1123,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/update.png</normaloff>icons/update.png</iconset>
+                <normaloff>../icons/update.png</normaloff>../icons/update.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1127,7 +1152,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/publish.png</normaloff>icons/publish.png</iconset>
+                <normaloff>../icons/publish.png</normaloff>../icons/publish.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1172,7 +1197,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
+                <normaloff>../icons/refresh.png</normaloff>../icons/refresh.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -1512,7 +1537,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/add_report.png</normaloff>icons/add_report.png</iconset>
+           <normaloff>../icons/add_report.png</normaloff>../icons/add_report.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1541,7 +1566,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>icons/add_note.png</normaloff>icons/add_note.png</iconset>
+           <normaloff>../icons/add_note.png</normaloff>../icons/add_note.png</iconset>
          </property>
          <property name="iconSize">
           <size>

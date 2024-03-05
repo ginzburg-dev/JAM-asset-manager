@@ -1,0 +1,10 @@
+{
+    "files": [
+        "mainwindow.py",
+        "form.ui",
+        "config.json",
+        "config.user.json",
+        "reportwindow.ui",
+        "assets/MasterLights/dacha/day/dacha_day_lights.json"
+    ]
+}

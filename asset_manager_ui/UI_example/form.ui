@@ -1,0 +1,1752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1109</width>
+    <height>592</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>JAM Asset Manager</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/check.png</normaloff>icons/check.png</iconset>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>64</width>
+    <height>64</height>
+   </size>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>791</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0">
+     <property name="spacing">
+      <number>1</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="toolButton_newScene">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::DefaultContextMenu</enum>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>New Scene</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/new_scene.png</normaloff>icons/new_scene.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="shortcut">
+          <string/>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_update">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Update</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/update.png</normaloff>icons/update.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_import">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Import</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/import.png</normaloff>icons/import.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_publish">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Publish</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/publish.png</normaloff>icons/publish.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>43</width>
+           <height>43</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_check">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Check</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/check.png</normaloff>icons/check.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_denoise">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Denoise</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/denoiser_arrows.png</normaloff>icons/denoiser_arrows.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_mainPanel">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_fullPath">
+         <property name="focusPolicy">
+          <enum>Qt::TabFocus</enum>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_goto">
+         <property name="focusPolicy">
+          <enum>Qt::ClickFocus</enum>
+         </property>
+         <property name="text">
+          <string>-&gt;</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/goto.png</normaloff>icons/goto.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_copyClipboard">
+         <property name="focusPolicy">
+          <enum>Qt::ClickFocus</enum>
+         </property>
+         <property name="text">
+          <string>CC</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/clipboard.png</normaloff>icons/clipboard.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_projName">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Project:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_projName">
+         <item>
+          <property name="text">
+           <string>Kids</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Flo-Flo</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_projName">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Preferred</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>600</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="tabPosition">
+        <enum>QTabWidget::North</enum>
+       </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="elideMode">
+        <enum>Qt::ElideRight</enum>
+       </property>
+       <property name="documentMode">
+        <bool>true</bool>
+       </property>
+       <property name="tabsClosable">
+        <bool>false</bool>
+       </property>
+       <property name="tabBarAutoHide">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Asstes</string>
+        </attribute>
+        <widget class="QWidget" name="verticalLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>791</width>
+           <height>381</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_filter">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+              <property name="placeholderText">
+               <string>Filter Asset Name..</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="0,0,0,0">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="toolButton_aImport">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Import</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/import.png</normaloff>icons/import.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_aPublish">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Publish</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/publish.png</normaloff>icons/publish.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>100</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_aRefresh">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Refresh</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QSplitter" name="splitter_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::DefaultContextMenu</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="opaqueResize">
+             <bool>true</bool>
+            </property>
+            <property name="childrenCollapsible">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="layoutWidget">
+             <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QComboBox" name="comboBox_aTypes">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="baseSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="duplicatesEnabled">
+                 <bool>false</bool>
+                </property>
+                <property name="frame">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Master Lights</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Master Shots</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>HDRI Library</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Misc</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_aFilter">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::ClickFocus</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="dragEnabled">
+                 <bool>false</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Filter Name..</string>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeWidget" name="treeWidget_assetFolders">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+                </property>
+                <property name="showDropIndicator" stdset="0">
+                 <bool>true</bool>
+                </property>
+                <property name="dragEnabled">
+                 <bool>false</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="rootIsDecorated">
+                 <bool>true</bool>
+                </property>
+                <property name="itemsExpandable">
+                 <bool>true</bool>
+                </property>
+                <property name="expandsOnDoubleClick">
+                 <bool>true</bool>
+                </property>
+                <attribute name="headerVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="headerMinimumSectionSize">
+                 <number>19</number>
+                </attribute>
+                <attribute name="headerDefaultSectionSize">
+                 <number>100</number>
+                </attribute>
+                <attribute name="headerShowSortIndicator" stdset="0">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="headerStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <column>
+                 <property name="text">
+                  <string>main</string>
+                 </property>
+                </column>
+                <item>
+                 <property name="text">
+                  <string>dacha</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>garden</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>house</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>appartment</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>kitchen</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>hall</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>gosha_room</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>mira_room</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>hallway</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>yard</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>day</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>evening</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>park</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>day</string>
+                  </property>
+                 </item>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QListWidget" name="listWidget_assets">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>2</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="baseSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustIgnored</enum>
+             </property>
+             <property name="isWrapping" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="resizeMode">
+              <enum>QListView::Adjust</enum>
+             </property>
+             <property name="layoutMode">
+              <enum>QListView::SinglePass</enum>
+             </property>
+             <property name="spacing">
+              <number>15</number>
+             </property>
+             <property name="viewMode">
+              <enum>QListView::IconMode</enum>
+             </property>
+             <property name="uniformItemSizes">
+              <bool>false</bool>
+             </property>
+             <property name="selectionRectVisible">
+              <bool>true</bool>
+             </property>
+             <property name="sortingEnabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Scenes</string>
+        </attribute>
+        <widget class="QWidget" name="verticalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>791</width>
+           <height>371</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_scenes_filter">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+              <property name="placeholderText">
+               <string>Filter Scenes Name..</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QToolButton" name="toolButton_sCreate">
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Create</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/new_scene.png</normaloff>icons/new_scene.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_sUpdate">
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Update</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/update.png</normaloff>icons/update.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_sPublish">
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Publish</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/publish.png</normaloff>icons/publish.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>100</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_sRefresh">
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Refresh</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QListWidget" name="listWidget_episodes">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>70</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="currentRow">
+               <number>0</number>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>ep049</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>ep053</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_scenesTable">
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAsNeeded</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustToContents</enum>
+              </property>
+              <property name="autoScroll">
+               <bool>true</bool>
+              </property>
+              <property name="autoScrollMargin">
+               <number>16</number>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="tabKeyNavigation">
+               <bool>true</bool>
+              </property>
+              <property name="showDropIndicator" stdset="0">
+               <bool>true</bool>
+              </property>
+              <property name="dragDropOverwriteMode">
+               <bool>true</bool>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>true</bool>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::ExtendedSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="textElideMode">
+               <enum>Qt::ElideRight</enum>
+              </property>
+              <property name="showGrid">
+               <bool>false</bool>
+              </property>
+              <property name="gridStyle">
+               <enum>Qt::NoPen</enum>
+              </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="cornerButtonEnabled">
+               <bool>true</bool>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderCascadingSectionResizes">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>100</number>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderCascadingSectionResizes">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderMinimumSectionSize">
+               <number>21</number>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>21</number>
+              </attribute>
+              <attribute name="verticalHeaderHighlightSections">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+               <bool>false</bool>
+              </attribute>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Status</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Scene</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Note</string>
+               </property>
+              </column>
+              <item row="0" column="0">
+               <property name="text">
+                <string>ready to start</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>64</red>
+                  <green>178</green>
+                  <blue>211</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+              <item row="0" column="1">
+               <property name="text">
+                <string>ep053_sc001</string>
+               </property>
+              </item>
+              <item row="1" column="0">
+               <property name="text">
+                <string>in progress</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>114</red>
+                  <green>183</green>
+                  <blue>245</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+              <item row="1" column="1">
+               <property name="text">
+                <string>ep053_sc002</string>
+               </property>
+              </item>
+              <item row="2" column="0">
+               <property name="text">
+                <string>in progress</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>115</red>
+                  <green>183</green>
+                  <blue>245</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+              <item row="2" column="1">
+               <property name="text">
+                <string>ep053_sc003</string>
+               </property>
+              </item>
+              <item row="3" column="0">
+               <property name="text">
+                <string>published</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>139</red>
+                  <green>192</green>
+                  <blue>61</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+              <item row="3" column="1">
+               <property name="text">
+                <string>ep053_sc004</string>
+               </property>
+              </item>
+              <item row="4" column="1">
+               <property name="text">
+                <string>ep053_sc005</string>
+               </property>
+              </item>
+              <item row="5" column="1">
+               <property name="text">
+                <string>ep053_sc006</string>
+               </property>
+              </item>
+              <item row="6" column="1">
+               <property name="text">
+                <string>ep053_sc007</string>
+               </property>
+              </item>
+              <item row="7" column="1">
+               <property name="text">
+                <string>ep053_sc008</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>0</y>
+      <width>281</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <property name="spacing">
+      <number>5</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>70</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="toolButton_addReport">
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>+ Report</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/add_report.png</normaloff>icons/add_report.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_addNote">
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>+ Note</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>icons/add_note.png</normaloff>icons/add_note.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QSplitter" name="splitter">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QTextBrowser" name="textBrowser_history">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+       <widget class="QTextBrowser" name="textBrowser_metadata"/>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1109</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="tabletTracking">
+    <bool>false</bool>
+   </property>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menuAsset">
+    <property name="tearOffEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Asset</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>false</bool>
+    </property>
+    <addaction name="actionNewScene"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionUpdate"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
+    <addaction name="actionPublish"/>
+    <addaction name="actionCheck"/>
+    <addaction name="separator"/>
+    <addaction name="actionDenoise"/>
+   </widget>
+   <widget class="QMenu" name="menuRender_2">
+    <property name="title">
+     <string>Utilites</string>
+    </property>
+    <widget class="QMenu" name="menuRenderman">
+     <property name="title">
+      <string>Renderman</string>
+     </property>
+     <addaction name="actionRenderManager"/>
+     <addaction name="actionDenoise_2"/>
+     <addaction name="actionBake"/>
+    </widget>
+    <widget class="QMenu" name="menuArnold">
+     <property name="title">
+      <string>Arnold</string>
+     </property>
+     <addaction name="actionRenderManager_2"/>
+     <addaction name="actionDenoise_3"/>
+    </widget>
+    <widget class="QMenu" name="menuRedshift">
+     <property name="title">
+      <string>Redshift</string>
+     </property>
+     <addaction name="actionRender_Manager"/>
+     <addaction name="actionOptimizer"/>
+    </widget>
+    <addaction name="menuRenderman"/>
+    <addaction name="menuArnold"/>
+    <addaction name="menuRedshift"/>
+   </widget>
+   <addaction name="menuAsset"/>
+   <addaction name="menuRender_2"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNewScene">
+   <property name="text">
+    <string>New Scene</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="text">
+    <string>Update Scene</string>
+   </property>
+  </action>
+  <action name="actionPublish">
+   <property name="text">
+    <string>Publish</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionDenoise">
+   <property name="text">
+    <string>Denoise</string>
+   </property>
+  </action>
+  <action name="actionCheck">
+   <property name="text">
+    <string>Check</string>
+   </property>
+  </action>
+  <action name="actionRenderManager">
+   <property name="text">
+    <string>Render Manager</string>
+   </property>
+  </action>
+  <action name="actionDenoise_2">
+   <property name="text">
+    <string>Denoise</string>
+   </property>
+  </action>
+  <action name="actionBake">
+   <property name="text">
+    <string>Bake</string>
+   </property>
+  </action>
+  <action name="actionRenderManager_2">
+   <property name="text">
+    <string>Render Manager</string>
+   </property>
+  </action>
+  <action name="actionDenoise_3">
+   <property name="text">
+    <string>Denoise</string>
+   </property>
+  </action>
+  <action name="actionRender_Manager">
+   <property name="text">
+    <string>Render Manager</string>
+   </property>
+  </action>
+  <action name="actionOptimizer">
+   <property name="text">
+    <string>Optimizer</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

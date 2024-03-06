@@ -1,6 +1,5 @@
 {
-        "assetManagerName":"Asset Manager X",
-        "maximise": "True",
+        "assetManagerName":"JAM Asset Manager",
         "projects": [
 
             {
@@ -78,8 +77,7 @@
 
         ],
 
-        "iconPath": "/Users/dmitryginzburg/UI_example/icons",
-        "iconPlaceholderPath": "/Users/dmitryginzburg/UI_example/icons/icon_placeholder.jpg",
+        "iconPlaceholder": "icon_placeholder.jpg",
         "iconSize": 200,
 
         "excludedNames": [".DS_Store"],

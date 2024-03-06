@@ -1,4 +1,7 @@
-# This Python file uses the following encoding: utf-8
+import sys
+JAM_path = '/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager'
+sys.path.append(JAM_path)
+
 import sys
 import os
 import json
@@ -6,30 +9,22 @@ import shutil
 from datetime import datetime
 from functools import partial
 
-
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QListWidgetItem, QTreeWidgetItem, QTableWidgetItem, QListWidgetItem, QAbstractItemView, QTextBrowser, QWidget
-from PySide6.QtGui import QPixmap, QIcon, QCursor, QColor
-from PySide6.QtCore import Qt, QSize, QRect, QModelIndex
-
-# Important:
-# You need to run the following command to generate the ui_form.py file
-#     pyside6-uic form.ui -o ui_form.py, or
-#     pyside2-uic form.ui -o ui_form.py
 from ui.ui_jam import Ui_jam
 from ui.ui_report import Ui_report
 
+from PySide2.QtWidgets import QApplication, QMainWindow, QLabel, QListWidgetItem, QTreeWidgetItem, QTableWidgetItem, QListWidgetItem, QAbstractItemView, QTextBrowser, QWidget, QAction
+from PySide2.QtGui import QPixmap, QIcon, QCursor, QColor
+from PySide2.QtCore import Qt, QSize, QRect, QModelIndex
 
 # Asset Manager Configuration
-json_config_path = 'config.json'
-json_user_config_path = 'config.user.json'
+json_config_path = JAM_path+'/config.json'
+json_user_config_path = JAM_path+'/config.user.json'
 json_asset_template = {
 "assetName":"asset_name",
 "assetType":"type",
 "createdTime":"",
 "messages": []
 }
-
-
 
 excluded_names  = ['.DS_Store']
 allowed_extensions  = ['hdr','ma','mb']
@@ -46,12 +41,9 @@ current_project = 'Kids'
 current_asset_type = 'Master Lights'
 current_episode = 'MG049'
 
-
 # global variables
 global_asset_list = []
 global_scene_list = []
-
-
 
 def readConfig():
     global excluded_names
@@ -63,6 +55,7 @@ def readConfig():
     global current_episode
     global assets_paths
     global projects_paths
+    
     if os.path.exists(json_config_path):
         f = open(json_config_path)
         # returns JSON object as
@@ -73,7 +66,7 @@ def readConfig():
 
         excluded_names = data['excludedNames']
         allowed_extensions  = data['allowedExtensions']
-        icon_placeholder = data['iconPlaceholderPath']
+        icon_placeholder = data['iconPlaceholder']
         asset_icon_size = data['iconSize']
 
         projects_paths.clear()
@@ -525,7 +518,7 @@ class MainWindow(QMainWindow):
         if os.path.exists(get_preview_path(item)):
             icon_path = get_preview_path(item)
         else:
-            icon_path = icon_placeholder
+            icon_path = JAM_path+'/icons/'+icon_placeholder
         #scaled(QSize(200, 200)
         icoPixmap = QPixmap(icon_path)
         w = icoPixmap.width()
@@ -611,10 +604,10 @@ class MainWindow(QMainWindow):
             list = get_scenes_list(episode,self.ui.comboBox_projName.currentText())
             for i in enumerate(list):
                 status = 'ready to start'
-                color = QColor(114,183,245) #blue color
+                color = QColor(92,113,245) #ready to start color
                 if list[i[0]][3] == 1:
                     status = 'in process'
-                    color = QColor(139,192,61) #green color
+                    color = QColor(130,95,193) #in progress color
                 new_item_status = QTableWidgetItem(status)
                 new_item_status.setText(status)
                 new_item_status.setBackground(color)
@@ -789,13 +782,34 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_jam()
         self.ui.setupUi(self)
         menu = self.menuBar()
         menu.setNativeMenuBar(False)
-        #self.setWindowTitle("GINZBURG Asset Manager X")
-        self.setWindowIcon(QIcon("icons/icon_jam_purple.png"))
-
+        
+        #self.setWindowTitle("JAM Asset Manager")
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.setWindowIcon(QIcon(JAM_path+"/icons/icon_jam_purple.png"))
+        
+        # set icons
+        self.ui.toolButton_newScene.setIcon(QIcon(JAM_path+"/icons/icon_jam_purple.png"))
+        self.ui.toolButton_sCreate.setIcon(QIcon(JAM_path+"/icons/new_scene.png"))
+        self.ui.toolButton_update.setIcon(QIcon(JAM_path+"/icons/update.png"))
+        self.ui.toolButton_sUpdate.setIcon(QIcon(JAM_path+"/icons/update.png"))
+        self.ui.toolButton_publish.setIcon(QIcon(JAM_path+"/icons/publish.png"))
+        self.ui.toolButton_aPublish.setIcon(QIcon(JAM_path+"/icons/publish.png"))
+        self.ui.toolButton_sPublish.setIcon(QIcon(JAM_path+"/icons/publish.png"))
+        self.ui.toolButton_import.setIcon(QIcon(JAM_path+"/icons/import.png"))
+        self.ui.toolButton_aImport.setIcon(QIcon(JAM_path+"/icons/import.png"))
+        self.ui.toolButton_denoise.setIcon(QIcon(JAM_path+"/icons/denoise.png"))
+        self.ui.toolButton_check.setIcon(QIcon(JAM_path+"/icons/check.png"))
+        self.ui.toolButton_aRefresh.setIcon(QIcon(JAM_path+"/icons/refresh.png"))
+        self.ui.toolButton_sRefresh.setIcon(QIcon(JAM_path+"/icons/refresh.png"))
+        self.ui.toolButton_goto.setIcon(QIcon(JAM_path+"/icons/goto.png"))
+        self.ui.toolButton_copyClipboard.setIcon(QIcon(JAM_path+"/icons/clipboard.png"))
+        self.ui.toolButton_addReport.setIcon(QIcon(JAM_path+"/icons/add_report.png"))
+        self.ui.toolButton_addNote.setIcon(QIcon(JAM_path+"/icons/add_note.png"))
+        
         readConfig()
         self.updateProject()
         self.updateAssetTypes()
@@ -861,25 +875,11 @@ class MainWindow(QMainWindow):
         self.ui.actionImport.triggered.connect(self.importElement)
         self.ui.actionCheck.triggered.connect(self.checkElement)
         self.ui.actionDenoise.triggered.connect(self.denoise)
-        '''
-        date = '05/03/2024 19:10:02'
-        user = 'd_ginzburg'
-        hours = 2
-        body_message = 'Message'
-        report_header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #85C1E9">Report&nbsp;&nbsp;'+date+'</p>'
-        report_header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #85C1E9">'+user+'&nbsp;&nbsp;&nbsp;'+str(hours)+'h</p>'
-        message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #D6EAF8">'+body_message+'</p>'
-        text = report_header + message
-        self.ui.textBrowser_history.setHtml(text)
-        '''
-        get_scenes_list('MG049','Kids')
-        name = 'MG049_010.ma'
-        name1 = 'MG049_630 (Конфликтующая копия с компьютера Vladimir Cernyavskiy 2024-02-28).ma'
-        print(name.split('MG049_'),len(name.split('MG049_')[1]))
-        print(name1.split('MG049_'),len(name1.split('MG049_')[1]))
-
+        #self.ui.setStyleSheet(u"border: 1px solid #C4C4C3;")
+        
+        
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    #app = QApplication(sys.argv)
     widget = MainWindow()
     widget.show()
-    sys.exit(app.exec())
+    #sys.exit(app.exec())

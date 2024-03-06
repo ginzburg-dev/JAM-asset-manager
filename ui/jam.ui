@@ -67,10 +67,16 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetMinimumSize</enum>
      </property>
+     <property name="topMargin">
+      <number>5</number>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
         <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
        </property>
        <item>
         <widget class="QToolButton" name="toolButton_newScene">
@@ -111,8 +117,8 @@
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: 1px solid #8f8f91;
-background-color: #686868;</string>
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
          </property>
          <property name="text">
           <string>New Scene</string>
@@ -165,9 +171,8 @@ background-color: #686868;</string>
           <bool>false</bool>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: 1px solid #8f8f91;
-background-color : #555555;
-</string>
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
          </property>
          <property name="text">
           <string>Update</string>
@@ -220,6 +225,9 @@ background-color : #555555;
           <string notr="true">border: 1px solid #575757;
 background-color : #464646;</string>
          </property>
+         <property name="locale">
+          <locale language="English" country="UnitedKingdom"/>
+         </property>
          <property name="text">
           <string>Import</string>
          </property>
@@ -266,6 +274,10 @@ background-color : #464646;</string>
          </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
          </property>
          <property name="text">
           <string>Publish</string>
@@ -314,6 +326,10 @@ background-color : #464646;</string>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
+         </property>
          <property name="text">
           <string>Check</string>
          </property>
@@ -361,6 +377,10 @@ background-color : #464646;</string>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
+         </property>
          <property name="text">
           <string>Denoise</string>
          </property>
@@ -383,31 +403,6 @@ background-color : #464646;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>80</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>80</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="horizontalSpacer_mainPanel">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -421,6 +416,13 @@ background-color : #464646;</string>
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -442,6 +444,10 @@ background-color : #464646;</string>
          <property name="focusPolicy">
           <enum>Qt::ClickFocus</enum>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
+         </property>
          <property name="text">
           <string>-&gt;</string>
          </property>
@@ -456,6 +462,10 @@ background-color : #464646;</string>
          <property name="focusPolicy">
           <enum>Qt::ClickFocus</enum>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
+         </property>
          <property name="text">
           <string>CC</string>
          </property>
@@ -468,16 +478,15 @@ background-color : #464646;</string>
       </layout>
      </item>
      <item>
-      <widget class="Line" name="line">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
        </property>
        <item>
         <widget class="QLabel" name="label_projName">
@@ -544,7 +553,7 @@ background-color : #464646;</string>
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="elideMode">
         <enum>Qt::ElideRight</enum>
@@ -668,11 +677,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>30</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Import</string>
@@ -703,11 +716,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>30</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Publish</string>
@@ -754,11 +771,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>30</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Refresh</string>
@@ -1146,11 +1167,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>16777215</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Create</string>
@@ -1184,11 +1209,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>16777215</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Update</string>
@@ -1213,11 +1242,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>16777215</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Publish</string>
@@ -1258,11 +1291,15 @@ background-color : #464646;</string>
               <property name="maximumSize">
                <size>
                 <width>70</width>
-                <height>16777215</height>
+                <height>25</height>
                </size>
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
               </property>
               <property name="text">
                <string>Refresh</string>
@@ -1449,12 +1486,17 @@ background-color : #464646;</string>
                <property name="text">
                 <string>ready to start</string>
                </property>
+               <property name="font">
+                <font>
+                 <family>.AppleSystemUIFont</family>
+                </font>
+               </property>
                <property name="background">
                 <brush brushstyle="SolidPattern">
                  <color alpha="255">
-                  <red>64</red>
-                  <green>178</green>
-                  <blue>211</blue>
+                  <red>92</red>
+                  <green>113</green>
+                  <blue>245</blue>
                  </color>
                 </brush>
                </property>
@@ -1471,9 +1513,9 @@ background-color : #464646;</string>
                <property name="background">
                 <brush brushstyle="SolidPattern">
                  <color alpha="255">
-                  <red>114</red>
-                  <green>183</green>
-                  <blue>245</blue>
+                  <red>148</red>
+                  <green>55</green>
+                  <blue>255</blue>
                  </color>
                 </brush>
                </property>
@@ -1490,9 +1532,9 @@ background-color : #464646;</string>
                <property name="background">
                 <brush brushstyle="SolidPattern">
                  <color alpha="255">
-                  <red>115</red>
-                  <green>183</green>
-                  <blue>245</blue>
+                  <red>130</red>
+                  <green>95</green>
+                  <blue>193</blue>
                  </color>
                 </brush>
                </property>
@@ -1508,10 +1550,10 @@ background-color : #464646;</string>
                </property>
                <property name="background">
                 <brush brushstyle="SolidPattern">
-                 <color alpha="255">
-                  <red>139</red>
-                  <green>192</green>
-                  <blue>61</blue>
+                 <color alpha="128">
+                  <red>96</red>
+                  <green>199</green>
+                  <blue>70</blue>
                  </color>
                 </brush>
                </property>
@@ -1523,22 +1565,22 @@ background-color : #464646;</string>
               </item>
               <item row="4" column="1">
                <property name="text">
-                <string>ep053_sc005</string>
+                <string/>
                </property>
               </item>
               <item row="5" column="1">
                <property name="text">
-                <string>ep053_sc006</string>
+                <string/>
                </property>
               </item>
               <item row="6" column="1">
                <property name="text">
-                <string>ep053_sc007</string>
+                <string/>
                </property>
               </item>
               <item row="7" column="1">
                <property name="text">
-                <string>ep053_sc008</string>
+                <string/>
                </property>
               </item>
              </widget>
@@ -1598,11 +1640,15 @@ background-color : #464646;</string>
          <property name="maximumSize">
           <size>
            <width>80</width>
-           <height>16777215</height>
+           <height>25</height>
           </size>
          </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
          </property>
          <property name="text">
           <string>+ Report</string>
@@ -1627,11 +1673,15 @@ background-color : #464646;</string>
          <property name="maximumSize">
           <size>
            <width>70</width>
-           <height>16777215</height>
+           <height>25</height>
           </size>
          </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
          </property>
          <property name="text">
           <string>+ Note</string>

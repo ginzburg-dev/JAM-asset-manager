@@ -8,22 +8,22 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient,
     QCursor, QFont, QFontDatabase, QGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplication, QComboBox,
+from PySide2.QtWidgets import (QAction, QAbstractItemView, QAbstractScrollArea, QApplication, QComboBox,
     QFrame, QHBoxLayout, QHeaderView, QLabel,
     QLayout, QLineEdit, QListView, QListWidget,
     QListWidgetItem, QMainWindow, QMenu, QMenuBar,
-    QSizePolicy, QSpacerItem, QSplitter, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QTextBrowser,
-    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-    QWidget)
+    QPushButton, QSizePolicy, QSpacerItem, QSplitter,
+    QStatusBar, QTabWidget, QTableWidget, QTableWidgetItem,
+    QTextBrowser, QToolButton, QTreeWidget, QTreeWidgetItem,
+    QVBoxLayout, QWidget)
 
 class Ui_jam(object):
     def setupUi(self, jam):
@@ -31,9 +31,11 @@ class Ui_jam(object):
             jam.setObjectName(u"jam")
         jam.setWindowModality(Qt.NonModal)
         jam.resize(1109, 592)
+        jam.setAcceptDrops(True)
         icon = QIcon()
         icon.addFile(u"icons/check.png", QSize(), QIcon.Normal, QIcon.Off)
         jam.setWindowIcon(icon)
+        jam.setStyleSheet(u"")
         jam.setIconSize(QSize(64, 64))
         jam.setToolButtonStyle(Qt.ToolButtonIconOnly)
         jam.setAnimated(False)
@@ -96,6 +98,8 @@ class Ui_jam(object):
         self.toolButton_newScene.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.toolButton_newScene.setLayoutDirection(Qt.LeftToRight)
         self.toolButton_newScene.setAutoFillBackground(False)
+        self.toolButton_newScene.setStyleSheet(u"border: 1px solid #8f8f91;\n"
+"background-color: #686868;")
         icon1 = QIcon()
         icon1.addFile(u"../icons/new_scene.png", QSize(), QIcon.Normal, QIcon.Off)
         self.toolButton_newScene.setIcon(icon1)
@@ -113,6 +117,9 @@ class Ui_jam(object):
         self.toolButton_update.setMaximumSize(QSize(80, 70))
         self.toolButton_update.setFocusPolicy(Qt.NoFocus)
         self.toolButton_update.setAutoFillBackground(False)
+        self.toolButton_update.setStyleSheet(u"border: 1px solid #8f8f91;\n"
+"background-color : #555555;\n"
+"")
         icon2 = QIcon()
         icon2.addFile(u"../icons/update.png", QSize(), QIcon.Normal, QIcon.Off)
         self.toolButton_update.setIcon(icon2)
@@ -132,6 +139,8 @@ class Ui_jam(object):
         self.toolButton_import.setMaximumSize(QSize(80, 70))
         self.toolButton_import.setBaseSize(QSize(0, 0))
         self.toolButton_import.setFocusPolicy(Qt.NoFocus)
+        self.toolButton_import.setStyleSheet(u"border: 1px solid #575757;\n"
+"background-color : #464646;")
         icon3 = QIcon()
         icon3.addFile(u"../icons/import.png", QSize(), QIcon.Normal, QIcon.Off)
         self.toolButton_import.setIcon(icon3)
@@ -185,8 +194,18 @@ class Ui_jam(object):
         self.toolButton_denoise.setIcon(icon6)
         self.toolButton_denoise.setIconSize(QSize(40, 40))
         self.toolButton_denoise.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.toolButton_denoise.setAutoRaise(False)
 
         self.horizontalLayout_2.addWidget(self.toolButton_denoise)
+
+        self.pushButton = QPushButton(self.verticalLayoutWidget_3)
+        self.pushButton.setObjectName(u"pushButton")
+        sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy)
+        self.pushButton.setMinimumSize(QSize(80, 80))
+        self.pushButton.setMaximumSize(QSize(80, 80))
+
+        self.horizontalLayout_2.addWidget(self.pushButton)
 
         self.horizontalSpacer_mainPanel = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -226,6 +245,13 @@ class Ui_jam(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
 
+        self.line = QFrame(self.verticalLayoutWidget_3)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_3.addWidget(self.line)
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setSpacing(1)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -253,10 +279,13 @@ class Ui_jam(object):
 
         self.tabWidget = QTabWidget(self.verticalLayoutWidget_3)
         self.tabWidget.setObjectName(u"tabWidget")
+        self.tabWidget.setAutoFillBackground(False)
+        self.tabWidget.setStyleSheet(u"")
         self.tabWidget.setTabPosition(QTabWidget.North)
         self.tabWidget.setTabShape(QTabWidget.Rounded)
         self.tabWidget.setElideMode(Qt.ElideRight)
-        self.tabWidget.setDocumentMode(True)
+        self.tabWidget.setUsesScrollButtons(False)
+        self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(False)
         self.tabWidget.setTabBarAutoHide(False)
         self.tab = QWidget()
@@ -480,6 +509,9 @@ class Ui_jam(object):
         self.toolButton_sCreate.setFocusPolicy(Qt.NoFocus)
         self.toolButton_sCreate.setIcon(icon1)
         self.toolButton_sCreate.setIconSize(QSize(20, 20))
+        self.toolButton_sCreate.setAutoRepeat(False)
+        self.toolButton_sCreate.setAutoExclusive(False)
+        self.toolButton_sCreate.setPopupMode(QToolButton.DelayedPopup)
         self.toolButton_sCreate.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 
         self.horizontalLayout_6.addWidget(self.toolButton_sCreate)
@@ -746,7 +778,7 @@ class Ui_jam(object):
 
         self.retranslateUi(jam)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         self.listWidget_episodes.setCurrentRow(0)
 
 
@@ -778,6 +810,7 @@ class Ui_jam(object):
         self.toolButton_publish.setText(QCoreApplication.translate("jam", u"Publish", None))
         self.toolButton_check.setText(QCoreApplication.translate("jam", u"Check", None))
         self.toolButton_denoise.setText(QCoreApplication.translate("jam", u"Denoise", None))
+        self.pushButton.setText(QCoreApplication.translate("jam", u"PushButton", None))
         self.toolButton_goto.setText(QCoreApplication.translate("jam", u"->", None))
         self.toolButton_copyClipboard.setText(QCoreApplication.translate("jam", u"CC", None))
         self.label_projName.setText(QCoreApplication.translate("jam", u"Project:", None))

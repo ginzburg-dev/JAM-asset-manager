@@ -13,12 +13,18 @@
     <height>592</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>JAM Asset Manager</string>
   </property>
   <property name="windowIcon">
    <iconset>
     <normaloff>icons/check.png</normaloff>icons/check.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <property name="iconSize">
    <size>
@@ -54,7 +60,7 @@
       <height>531</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0,0">
      <property name="spacing">
       <number>1</number>
      </property>
@@ -103,6 +109,10 @@
          </property>
          <property name="autoFillBackground">
           <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #8f8f91;
+background-color: #686868;</string>
          </property>
          <property name="text">
           <string>New Scene</string>
@@ -154,6 +164,11 @@
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #8f8f91;
+background-color : #555555;
+</string>
+         </property>
          <property name="text">
           <string>Update</string>
          </property>
@@ -200,6 +215,10 @@
          </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
          </property>
          <property name="text">
           <string>Import</string>
@@ -358,6 +377,34 @@
          <property name="toolButtonStyle">
           <enum>Qt::ToolButtonTextUnderIcon</enum>
          </property>
+         <property name="autoRaise">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>PushButton</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -421,6 +468,13 @@
       </layout>
      </item>
      <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>1</number>
@@ -477,6 +531,12 @@
      </item>
      <item>
       <widget class="QTabWidget" name="tabWidget">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="tabPosition">
         <enum>QTabWidget::North</enum>
        </property>
@@ -484,13 +544,16 @@
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="elideMode">
         <enum>Qt::ElideRight</enum>
        </property>
+       <property name="usesScrollButtons">
+        <bool>false</bool>
+       </property>
        <property name="documentMode">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="tabsClosable">
         <bool>false</bool>
@@ -1101,6 +1164,15 @@
                 <width>20</width>
                 <height>20</height>
                </size>
+              </property>
+              <property name="autoRepeat">
+               <bool>false</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="popupMode">
+               <enum>QToolButton::DelayedPopup</enum>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextBesideIcon</enum>

@@ -204,7 +204,7 @@ def load_project_structure(startpath, tree):
             #print(path_info)
             if os.path.isdir(path_info):
                 load_project_structure(path_info, parent_itm)
-                parent_itm.setIcon(0, QIcon('icons/folder.png')) #ADD
+                parent_itm.setIcon(0, QIcon(JAM_path+'/icons/folder.png')) #ADD
             else:
                 #parent_itm.setIcon(0, QIcon('assets/file.ico')). ADD
                 ik = 0
@@ -319,14 +319,14 @@ class MainWindow(QMainWindow):
                         hours = i['hours']
                         body_message = i['message']
                         if i['type'] == 'report':
-                            header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #85C1E9">Report&nbsp;&nbsp;'+date+'</p>'
-                            header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #85C1E9">'+user+'&nbsp;&nbsp;&nbsp;'+str(hours)+'h</p>'
-                            message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #D6EAF8">'+body_message+'</p>'
+                            header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">Report&nbsp;&nbsp;'+date+'</p>'
+                            header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">'+user+'&nbsp;&nbsp;&nbsp;'+str(hours)+'h</p>'
+                            message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message+'</p>'
                             text += header + message
                         if i['type'] == 'note':
-                            header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #F7DC6F">Note&nbsp;&nbsp;'+date+'</p>'
-                            header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #F7DC6F">'+user+'</p>'
-                            message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #FCF3CF">'+body_message+'</p>'
+                            header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">Note&nbsp;&nbsp;'+date+'</p>'
+                            header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">'+user+'</p>'
+                            message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message+'</p>'
                             text += header + message
             self.ui.textBrowser_history.setHtml(text)
 
@@ -478,7 +478,7 @@ class MainWindow(QMainWindow):
         projectTreeWidget = self.ui.treeWidget_assetFolders
         path = getAssetPath(self.ui.comboBox_aTypes.currentText(),self.ui.comboBox_projName.currentText())
         parent_itm = QTreeWidgetItem(projectTreeWidget, ['[root]'])
-        parent_itm.setIcon(0, QIcon('icons/base_01.png'))
+        parent_itm.setIcon(0, QIcon(JAM_path+'/icons/base_01.png'))
         parent_itm.setData(0, Qt.UserRole, path)
         print('path:   ', path)
         if len(path) != 0:

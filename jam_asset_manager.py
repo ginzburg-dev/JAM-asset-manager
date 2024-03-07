@@ -26,20 +26,74 @@ json_asset_template = {
 "messages": []
 }
 
+json_user_cfg_template = {
+    "projectName": "",
+    "currentAssetType": "", 
+    "currentEpisode": ""
+}
+
 excluded_names  = ['.DS_Store']
 allowed_extensions  = ['hdr','ma','mb']
 icon_placeholder = 'icon_placeholder.jpg'
 asset_icon_size = 200
-projects_paths = [['Kids', '/Users/dmitryginzburg/UI_example', 'scenes/episodes'],
-['Flo-Flo', '/Users/dmitryginzburg/UI_example', 'scenes/episodes'],
-['Fixies5', '/Users/dmitryginzburg/UI_example', 'scenes/episodes']]
-assets_paths = [['Master Lights', 'assets/MasterLights'],
-['Master Shots', 'assets/MasterShots'],
-['HDRI Library', 'assets/HDRI'],
-['Misc.', 'assets/Misc']]
-current_project = 'Kids'
-current_asset_type = 'Master Lights'
-current_episode = 'MG049'
+projects_paths = [
+    [
+        'Kids', 
+        '/Users/dmitryginzburg/UI_example', 
+        'scenes/episodes'
+    ],
+    [
+        'Flo-Flo', 
+        '/Users/dmitryginzburg/UI_example', 
+        'scenes/episodes'
+    ],
+    [
+        'Fixies5', 
+        '/Users/dmitryginzburg/UI_example', 
+        'scenes/episodes',
+        [
+            [
+                'Master Lights', 
+                'assets/Master_Lights'
+            ],
+            [
+                'Master Shots', 
+                'assets/MasterShots'
+            ],
+            [
+                'HDRI Library', 
+                'assets/HDRI'
+            ],
+            [
+                'Misc.', 
+                'assets/Misc'
+            ]
+        ]
+    ]
+]
+
+#current_project = 'Kids'
+#current_asset_type = 'Master Lights'
+#current_episode = 'MG049'
+
+current_user_state = [
+    'Fixies5',
+    [
+        'Kids',
+        'Master Lights',
+        'MG049'
+    ],
+    [
+        'Flo-Flo',
+        'Master Lights',
+        'MG049'
+    ],
+    [
+        'Fixies5',
+        'Master Lights',
+        'MG049'
+    ]
+]
 
 # global variables
 global_asset_list = []
@@ -50,10 +104,9 @@ def readConfig():
     global allowed_extensions
     global icon_placeholder
     global asset_icon_size
-    global current_project
-    global current_asset_type
-    global current_episode
-    global assets_paths
+    global current_user_state
+    #global current_asset_type
+    #global current_episode
     global projects_paths
     
     if os.path.exists(json_config_path):
@@ -70,33 +123,49 @@ def readConfig():
         asset_icon_size = data['iconSize']
 
         projects_paths.clear()
-        assets_paths.clear()
+        
         for i in data['projects']:
-            projects_paths.append([i['projectName'],i['projectPath'],i['episodePath']])
-            if current_project == i['projectName']:
-                for k in i['assets']:
+            assets_paths = []
+            for k in i['assets']:
                     assets_paths.append([k['assetType'],k['assetTypePath']])
+            projects_paths.append([i['projectName'],i['projectPath'],i['episodePath'],assets_paths])
 
-        current_project = data['currentProject']
-        current_asset_type = data['currentAssetType']
-        current_episode = data['currentEpisode']
+        
+        #current_project = data['currentProject'] ##
+        #current_asset_type = data['currentAssetType'] ##
+        #current_episode = data['currentEpisode'] ##
+
+        current_user_state[0] = data['currentProject']
 
         if os.path.exists(json_user_config_path):
             f_u = open(json_user_config_path)
             data_u = json.load(f_u)
-            current_project = data_u['currentProject']
-            current_asset_type = data_u['currentAssetType']
-            current_episode = data_u['currentEpisode']
-
+            #current_project = data_u['currentProject'] ##
+            #current_asset_type = data_u['currentAssetType'] ##
+            #current_episode = data_u['currentEpisode'] ##
+            current_user_state[0] = data_u['currentProject']
+            current_user_state[1] = []
+            for i in data_u['configs']:
+                current_user_state[1].append([i['projectName'],i['currentAssetType'],i['currentEpisode']])
+            f_u.close()
         print('PP: ',projects_paths)
-        print('AP: ',assets_paths)
-        print('excludedNames: ', asset_icon_size )
-
-        print(data['projects'][0]['projectName'])
+        print('CURRENT_USER_STATE: ', current_user_state)
 
         # Closing file
         f.close()
-    return 0
+
+def read_user_config():
+        global current_user_state
+        if os.path.exists(json_user_config_path):
+            f_u = open(json_user_config_path)
+            data_u = json.load(f_u)
+            current_user_state[1] = []
+            for i in data_u['configs']:
+                current_user_state[1].append([i['projectName'],i['currentAssetType'],i['currentEpisode']])
+            f_u.close()
+        print('PP: ',projects_paths)
+        print('CURRENT_USER_STATE: ', current_user_state)
+        
 
 
 def readJSON(path):
@@ -146,24 +215,19 @@ def getEpisodePath(name):
 
 def getAssetPath(name,current_project):
     result = ''
-    for i in assets_paths:
-        if name == i[0]:
-            result = getProjectPath(current_project) + '/'+ i[1]
-            if not os.path.isdir(result):
-                result = ''
+    for i in projects_paths:
+        if current_project == i[0]:
+            for k in i[3]:
+                if name == k[0]:
+                    result = getProjectPath(current_project) + '/'+ k[1]
+                    if not os.path.isdir(result):
+                        result = ''
     return result
 
 def isThere(name,list):
     result = False
     for i in list:
         if i == name:
-            result = True
-    return result
-
-def isAsset(name):
-    result = False
-    for i in assets_paths:
-        if  name.find(i[1]) != -1:
             result = True
     return result
 
@@ -264,7 +328,7 @@ class ReportWindow(QMainWindow):
         now = datetime.now() # current date and time
         hours = self.ui.spinBox_hours.value()
         text = self.ui.textEdit_maintext.toPlainText()
-        path = obj_data[1].replace(getExtension(obj_data[1]),'json')
+        path = obj_data[1].replace('.'+getExtension(obj_data[1]),'.json')
         date_time = now.strftime("%d/%m/%Y %H:%M:%S")
         data = []
         report = {
@@ -290,8 +354,8 @@ class ReportWindow(QMainWindow):
 
 
     def __init__(self,type,parent=None):
-        super().__init__(parent)
-        self.ui = Ui_ReportWindow()
+        super().__init__(parent, Qt.WindowStaysOnTopHint)
+        self.ui = Ui_report()
         self.ui.setupUi(self)
         obj_outline = parent.get_object_outline_path(parent.get_current_assetdata_to_report())
         out_report_widget = parent.ui.textBrowser_history
@@ -303,11 +367,26 @@ class ReportWindow(QMainWindow):
         self.ui.pushButton_ok.pressed.connect(partial(self.sendReportNote, parent, type))
 
 class MainWindow(QMainWindow):
+    
+    def getCurrentAssetsPaths(self):
+        result = []
+        current_project = self.ui.comboBox_projName.currentText()
+        for i in projects_paths:
+            if current_project == i[0]:
+                result = i[3]
+        return result
+    
+    def isAsset(self,name):
+        result = False
+        for k in self.getCurrentAssetsPaths():
+            if  name.find(k[1]) != -1:
+                result = True
+        return result
 
     def updateReportNote(self):
         self.ui.textBrowser_history.clear()
         data = self.get_current_assetdata_to_report()
-        path = data[1].replace(getExtension(data[1]),'json')
+        path = data[1].replace('.'+getExtension(data[1]),'.json')
         if os.path.exists(path):
             obj_data = readJSON(path)
             if len(obj_data) != 0:
@@ -317,31 +396,65 @@ class MainWindow(QMainWindow):
                         date = i['createdTime']
                         user = i['user']
                         hours = i['hours']
-                        body_message = i['message']
+                        body_message = i['message'].split('\n')
                         if i['type'] == 'report':
                             header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">Report&nbsp;&nbsp;'+date+'</p>'
                             header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">'+user+'&nbsp;&nbsp;&nbsp;'+str(hours)+'h</p>'
-                            message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message+'</p>'
+                            message = ''
+                            if len(body_message) > 1:
+                                for k in body_message:
+                                    if k != '':
+                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+k+'</p>'
+                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">&nbsp;</p>'
+                            else:
+                                message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message[0]+'</p>'
                             text += header + message
                         if i['type'] == 'note':
+                            
                             header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">Note&nbsp;&nbsp;'+date+'</p>'
                             header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">'+user+'</p>'
-                            message = '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message+'</p>'
+                            message = ''
+                            if len(body_message) > 1:
+                                for k in body_message:
+                                    if k != '':
+                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#3B453D">'+k+'</p>'
+                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #3B453D">&nbsp;</p>'
+                            else:
+                                message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #3B453D">'+body_message[0]+'</p>'
                             text += header + message
             self.ui.textBrowser_history.setHtml(text)
 
-    def write_prj_state_to_config(self):
+    def write_prj_state_to_config(self,mode):
+        # mode = {'project' , 'asset' , 'episode'}
         init_size = os.path.getsize(json_user_config_path)
         shutil.copyfile(json_user_config_path, json_user_config_path.replace('.json','.jsontmp'))
         current_size = os.path.getsize(json_user_config_path.replace('.json','.jsontmp'))
         f_u = open(json_user_config_path)
         data_u = json.load(f_u)
-        data_u['currentProject'] = self.ui.comboBox_projName.currentText()
-        data_u['currentAssetType'] = self.ui.comboBox_aTypes.currentText()
-        if self.ui.listWidget_episodes.currentItem() != None:
-            data_u['currentEpisode'] = self.ui.listWidget_episodes.currentItem().text()
-        else:
-            data_u['currentEpisode'] = ''
+        if mode == 'project':
+            data_u['currentProject'] = self.ui.comboBox_projName.currentText()
+        global json_user_cfg_template
+        json_user_cfg = json_user_cfg_template
+        found = 0
+        for i in data_u['configs']:
+            if i['projectName'] == self.ui.comboBox_projName.currentText():
+                if mode == 'asset':
+                    i['currentAssetType'] = self.ui.comboBox_aTypes.currentText()
+                if mode == 'episode':
+                    if self.ui.listWidget_episodes.currentItem() != None:
+                        i['currentEpisode'] = self.ui.listWidget_episodes.currentItem().text()
+                    else:
+                        i['currentEpisode'] = ''
+                found = 1
+        if found == 0:
+            json_user_cfg['projectName'] = data_u['currentProject']
+            json_user_cfg['currentAssetType'] = self.ui.comboBox_aTypes.currentText()
+            if self.ui.listWidget_episodes.currentItem() != None:
+                json_user_cfg['currentEpisode'] = self.ui.listWidget_episodes.currentItem().text()
+            else:
+                json_user_cfg['currentEpisode'] = ''
+
+            data_u['configs'].append(json_user_cfg)
 
         if init_size == current_size:
             with open(json_user_config_path, 'w') as f:
@@ -350,7 +463,7 @@ class MainWindow(QMainWindow):
             os.remove(json_user_config_path.replace('.json','.jsontmp'))
 
         f_u.close()
-        print('Wrote to JSON: ', data_u['currentProject'], ' ', data_u['currentAssetType'], ' ', data_u['currentEpisode'])
+        #print('Wrote to JSON: ', data_u['currentProject'], ' ', data_u['currentAssetType'], ' ', data_u['currentEpisode'])
 
     def get_current_project_path(self):
         return getProjectPath(self.ui.comboBox_projName.currentText())
@@ -380,9 +493,9 @@ class MainWindow(QMainWindow):
                 element_name = splitted[len(splitted)-1]
             for i in range(1,len(splitted)-1):
                 dir_path += splitted[i] + '/'
-        print(proj_name,' ',element_name,' ',dir_path, ' ',isAsset(dir_path))
+        print(proj_name,' ',element_name,' ',dir_path, ' ',self.isAsset(dir_path))
 
-        if isAsset(dir_path):
+        if self.isAsset(dir_path):
             print('this is the asset')
             self.ui.tabWidget.setCurrentWidget(self.ui.tabWidget.findChild(QWidget, 'tab'))
             found_items_buff = self.ui.listWidget_assets.findItems(element_name,Qt.MatchFlag.MatchExactly)
@@ -459,19 +572,33 @@ class MainWindow(QMainWindow):
         self.ui.comboBox_projName.clear()
         for i in projects_paths:
             self.ui.comboBox_projName.addItem(i[0])
-        self.ui.comboBox_projName.setCurrentIndex(self.ui.comboBox_projName.findText(current_project))
+        self.ui.comboBox_projName.setCurrentIndex(self.ui.comboBox_projName.findText(current_user_state[0]))
 
+    def get_current_asset_type(self):
+        result = ''
+        for i in current_user_state[1]:
+            if i[0] == self.ui.comboBox_projName.currentText():
+                result = i[1]
+        return result
+    
+    def get_current_episode(self):
+        result = ''
+        for i in current_user_state[1]:
+            if i[0] == self.ui.comboBox_projName.currentText():
+                result = i[2]
+        return result
+    
     def initEpisode(self):
-        if len(self.ui.listWidget_episodes.findItems(current_episode, Qt.MatchFlag.MatchExactly)) != 0:
-            self.ui.listWidget_episodes.setCurrentItem(self.ui.listWidget_episodes.findItems(current_episode, Qt.MatchFlag.MatchExactly)[0])
-
+        if len(self.ui.listWidget_episodes.findItems(self.get_current_episode(), Qt.MatchFlag.MatchExactly)) != 0:
+            self.ui.listWidget_episodes.setCurrentItem(self.ui.listWidget_episodes.findItems(self.get_current_episode(), Qt.MatchFlag.MatchExactly)[0])
+    
     def updateAssetTypes(self):
         self.ui.comboBox_aTypes.clear()
         atlist  =  []
-        for atname in assets_paths:
+        for atname in self.getCurrentAssetsPaths():
             atlist.append(atname[0])
         self.ui.comboBox_aTypes.addItems(atlist)
-        self.ui.comboBox_aTypes.setCurrentIndex(self.ui.comboBox_aTypes.findText(current_asset_type))
+        self.ui.comboBox_aTypes.setCurrentIndex(self.ui.comboBox_aTypes.findText(self.get_current_asset_type()))
 
     def updateAssetTree(self):
         self.ui.treeWidget_assetFolders.clear()
@@ -485,7 +612,7 @@ class MainWindow(QMainWindow):
             load_project_structure(path,parent_itm)
         self.ui.treeWidget_assetFolders.expandAll()
         self.updateAssets()
-        self.write_prj_state_to_config() # write current statement to json
+        self.write_prj_state_to_config('asset') # write current statement to json
 
 
     def updateEpisodeList(self):
@@ -499,15 +626,6 @@ class MainWindow(QMainWindow):
             #new_item_note = QTableWidgetItem()
             #new_item_scene.setData(Qt.UserRole,item)
             self.ui.listWidget_episodes.addItem(listItem)
-
-    def updateAllAssets(self):
-        self.updateAssetTypes()
-        self.updateAssetTree()
-        self.updateAssets()
-        self.updateEpisodeList()
-        self.initEpisode()
-        self.updateScenes()
-        self.write_prj_state_to_config() # write current statement to json
 
     def getAssetDir(self):
         print(self.ui.treeWidget_assetFolders.currentItem().data(0, Qt.UserRole))
@@ -567,7 +685,7 @@ class MainWindow(QMainWindow):
                 element_name = splitted[len(splitted)-1]
             for i in range(1,len(splitted)-1):
                 dir_path += splitted[i] + '/'
-        print(proj_name,' ',element_name,' ',dir_path, ' ',isAsset(dir_path))
+        print(proj_name,' ',element_name,' ',dir_path, ' ',self.isAsset(dir_path))
 
         if os.path.isfile(dir_path+element_name+'.ma'):
             exist = 1
@@ -594,14 +712,16 @@ class MainWindow(QMainWindow):
 
     def updateScenes(self):
         self.ui.tableWidget_scenesTable.clearContents()
+        global global_scene_list # initialize globality
+        global_scene_list.clear()
         getEpisodeSelected = self.ui.listWidget_episodes.currentItem()
-        if getEpisodeSelected:
+        if getEpisodeSelected != None:
             episode = getEpisodeSelected.text()
             list = []
-            global global_scene_list # initialize globality
-            global_scene_list.clear()
-            print(episode)
+            print('EPISODE: ',episode)
             list = get_scenes_list(episode,self.ui.comboBox_projName.currentText())
+            print('LIST: ',list)
+            self.ui.tableWidget_scenesTable.setRowCount(len(list)) 
             for i in enumerate(list):
                 status = 'ready to start'
                 color = QColor(92,113,245) #ready to start color
@@ -623,7 +743,7 @@ class MainWindow(QMainWindow):
 
             self.ui.tableWidget_scenesTable.sortByColumn(1,Qt.SortOrder.AscendingOrder)
         self.filter_scenes()
-        self.write_prj_state_to_config() # write current statement to json
+        self.write_prj_state_to_config('episode') # write current statement to json
 
     def updateAssets(self):
         self.ui.listWidget_assets.clear()
@@ -652,6 +772,7 @@ class MainWindow(QMainWindow):
         for i in asset_path:
             global_asset_list.append(i) # send list of found assets to global var
             self.createAssetItem(i)
+        
         self.filter_assets()
 
     # actions
@@ -767,7 +888,6 @@ class MainWindow(QMainWindow):
             if len(self.ui.listWidget_assets.selectedItems()) != 0:
                 item = self.ui.listWidget_assets.currentItem().data(Qt.UserRole)
                 asset_data = [item[0],item[2]]
-
         return asset_data
 
     def showReportWindow(self):
@@ -780,15 +900,28 @@ class MainWindow(QMainWindow):
             report_window = ReportWindow('note',self)
             report_window.show()
 
+    def set_current_state_assets(self):
+        self.ui.comboBox_aTypes.setCurrentIndex(self.ui.comboBox_aTypes.findText(self.get_current_asset_type()))
+
+    def updateAllAssets(self):
+        read_user_config()
+        self.updateAssetTypes()
+        self.updateAssetTree()
+        self.updateAssets()
+        self.updateEpisodeList()
+        self.initEpisode()
+        self.updateScenes()
+        self.set_current_state_assets()
+        self.write_prj_state_to_config('project')
+
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(parent, Qt.WindowStaysOnTopHint)
         self.ui = Ui_jam()
         self.ui.setupUi(self)
         menu = self.menuBar()
         menu.setNativeMenuBar(False)
         
         #self.setWindowTitle("JAM Asset Manager")
-        self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.setWindowIcon(QIcon(JAM_path+"/icons/icon_jam_purple.png"))
         
         # set icons
@@ -879,7 +1012,5 @@ class MainWindow(QMainWindow):
         
         
 if __name__ == "__main__":
-    #app = QApplication(sys.argv)
     widget = MainWindow()
     widget.show()
-    #sys.exit(app.exec())

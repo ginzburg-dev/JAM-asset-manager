@@ -53,25 +53,29 @@
 
             {
                  "projectName": "Fixies5",
-                 "projectPath": "/Users/dmitryginzburg/UI_example",
+                 "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5",
                  "episodePath":"scenes/episodes",
                  "assets": [
                      {
-                         "assetType": "Master Lights Fixies",
-                         "assetTypePath": "assets/MasterLights"
+                         "assetType": "Master Lights",
+                         "assetTypePath": "assets/Master_Lights"
                      },
                      {
-                         "assetType": "Master Shots Fixies",
-                         "assetTypePath": "assets/MasterShots"
+                         "assetType": "Master Shots",
+                         "assetTypePath": "assets/Master_Shots"
                      },
                      {
-                         "assetType": "HDRI Library Fixies",
+                         "assetType": "HDRI Library",
                          "assetTypePath": "assets/HDRI"
                      },
                      {
-                         "assetType": "Misc.Fixies",
+                         "assetType": "Misc.",
                          "assetTypePath": "assets/Misc"
-                     }
+                     },
+                     {
+                        "assetType": "Misc",
+                        "assetTypePath": "assets/Misc"
+                    }
                  ]
             }
 
@@ -83,7 +87,7 @@
         "excludedNames": [".DS_Store"],
         "allowedExtensions": ["hdr","ma"],
 
-        "currentProject": "Kids",
+        "currentProject": "Fixies5",
         "currentAssetType": "Master Lights",
-        "currentEpisode": "MG049"
+        "currentEpisode": "ep257"
 }

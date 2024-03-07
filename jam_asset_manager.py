@@ -325,10 +325,12 @@ class ReportWindow(QMainWindow):
 
     def sendReportNote(self,parent,type):
         obj_data = parent.get_current_assetdata_to_report()
+        print('DATA0_!!!!: ', obj_data)
         now = datetime.now() # current date and time
         hours = self.ui.spinBox_hours.value()
         text = self.ui.textEdit_maintext.toPlainText()
         path = obj_data[1].replace('.'+getExtension(obj_data[1]),'.json')
+        print('DATA1_!!!!: ', text,path)
         date_time = now.strftime("%d/%m/%Y %H:%M:%S")
         data = []
         report = {
@@ -338,17 +340,19 @@ class ReportWindow(QMainWindow):
             "createdTime": date_time,
             "hours": hours
         }
-        if not os.path.exists(path):
+        if not os.path.isfile(path):
             data = json_asset_template
+            data['messages'].clear()
         else:
             data = readJSON(path)
+        print(data,obj_data)
         data['assetName'] = obj_data[0]
         data['assetType'] = getExtension(obj_data[1])
         if len(data['createdTime']) == 0:
             data['createdTime'] = date_time
         data['messages'].append(report)
         writeJSON(path,data)
-        print(data)
+        print('DATA_!!!!: ', data)
         parent.updateReportNote()
         self.close()
 

@@ -1,59 +1,44 @@
 {
         "assetManagerName":"JAM Asset Manager",
         "projects": [
-
             {
-
-                 "projectName": "Kids",
-                 "projectPath": "/Users/dmitryginzburg/UI_example",
-                 "episodePath":"scenes/episodes",
-                 "assets": [
-                     {
-                         "assetType": "Master Lights",
-                         "assetTypePath": "assets/MasterLights"
-                     },
-                     {
-                         "assetType": "Master Shots",
-                         "assetTypePath": "assets/MasterShots"
-                     },
-                     {
-                         "assetType": "HDRI Library",
-                         "assetTypePath": "assets/HDRI"
-                     },
-                     {
-                         "assetType": "Misc.",
-                         "assetTypePath": "assets/Misc"
-                     }
-                 ]
-            },
-
-            {
-                "projectName": "Flo-Flo",
-                "projectPath": "/Users/dmitryginzburg/UI_example",
+                "projectName": "Fixies5",
+                "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5",
                 "episodePath":"scenes/episodes",
                 "assets": [
                     {
-                        "assetType": "Master Lights Flo",
-                        "assetTypePath": "assets/MasterLights"
+                        "assetType": "Master Lights",
+                        "assetTypePath": "assets/Master_Lights"
                     },
                     {
-                        "assetType": "Master Shots Flo",
-                        "assetTypePath": "assets/MasterShots"
+                        "assetType": "Master Shots",
+                        "assetTypePath": "assets/Master_Shots"
                     },
                     {
-                        "assetType": "HDRI Library Flo",
+                        "assetType": "HDRI Library",
                         "assetTypePath": "assets/HDRI"
+                    }
+                ]
+            },
+            {
+                "projectName": "Flo-Flo",
+                "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Flo-Flo",
+                "episodePath":"scenes/episodes",
+                "assets": [
+                    {
+                        "assetType": "Master Lights",
+                        "assetTypePath": "assets/Master_Lights"
                     },
                     {
-                        "assetType": "Misc.Fixies",
-                        "assetTypePath": "assets/Misc"
+                        "assetType": "Master Shots",
+                        "assetTypePath": "assets/Master_Shots"
                     }
                  ]
             },
-
             {
-                 "projectName": "Fixies5",
-                 "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5",
+
+                 "projectName": "Kids",
+                 "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Kids",
                  "episodePath":"scenes/episodes",
                  "assets": [
                      {
@@ -63,22 +48,9 @@
                      {
                          "assetType": "Master Shots",
                          "assetTypePath": "assets/Master_Shots"
-                     },
-                     {
-                         "assetType": "HDRI Library",
-                         "assetTypePath": "assets/HDRI"
-                     },
-                     {
-                         "assetType": "Misc.",
-                         "assetTypePath": "assets/Misc"
-                     },
-                     {
-                        "assetType": "Misc",
-                        "assetTypePath": "assets/Misc"
-                    }
+                     }
                  ]
             }
-
         ],
 
         "iconPlaceholder": "icon_placeholder.jpg",

@@ -4,6 +4,7 @@
             {
                 "projectName": "Fixies5",
                 "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5",
+                "rsScene": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5/assets/rs/rs_fixies5.ma",
                 "episodePath":"scenes/episodes",
                 "assets": [
                     {
@@ -28,10 +29,6 @@
                     {
                         "assetType": "Master Lights",
                         "assetTypePath": "assets/Master_Lights"
-                    },
-                    {
-                        "assetType": "Master Shots",
-                        "assetTypePath": "assets/Master_Shots"
                     }
                  ]
             },

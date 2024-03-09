@@ -224,7 +224,7 @@ class Ui_jam(object):
         self.horizontalLayout_5.setContentsMargins(-1, 5, -1, -1)
         self.lineEdit_fullPath = QLineEdit(self.verticalLayoutWidget_3)
         self.lineEdit_fullPath.setObjectName(u"lineEdit_fullPath")
-        self.lineEdit_fullPath.setFocusPolicy(Qt.TabFocus)
+        self.lineEdit_fullPath.setFocusPolicy(Qt.ClickFocus)
         self.lineEdit_fullPath.setClearButtonEnabled(False)
 
         self.horizontalLayout_5.addWidget(self.lineEdit_fullPath)

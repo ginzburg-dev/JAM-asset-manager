@@ -24,29 +24,30 @@
             {
                 "projectName": "Flo-Flo",
                 "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Flo-Flo",
+                "rsScene": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Flo-Flo/assets/RS/RS_Flo_Flo_v01.ma",
                 "episodePath":"scenes/episodes",
                 "assets": [
                     {
                         "assetType": "Master Lights",
                         "assetTypePath": "assets/Master_Lights"
                     }
-                 ]
+                ]
             },
             {
-
-                 "projectName": "Kids",
-                 "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Kids",
-                 "episodePath":"scenes/episodes",
-                 "assets": [
-                     {
-                         "assetType": "Master Lights",
-                         "assetTypePath": "assets/Master_Lights"
-                     },
-                     {
-                         "assetType": "Master Shots",
-                         "assetTypePath": "assets/Master_Shots"
-                     }
-                 ]
+                "projectName": "Kids",
+                "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Kids",
+                "rsScene": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Kids/assets/RS/RS_Kids_v01.ma",
+                "episodePath":"scenes/episodes",
+                "assets": [
+                    {
+                        "assetType": "Master Lights",
+                        "assetTypePath": "assets/Master_Lights"
+                    },
+                    {
+                        "assetType": "Master Shots",
+                        "assetTypePath": "assets/Master_Shots"
+                    }
+                ]
             }
         ],
 

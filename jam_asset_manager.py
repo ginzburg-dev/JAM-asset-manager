@@ -48,12 +48,16 @@ projects_paths = [
     [
         'Kids', 
         '/Users/dmitryginzburg/UI_example', 
-        'scenes/episodes'
+        'scenes/episodes',
+        [],
+        './Fixies5/assets/RS/RS_Fixies5_v01.ma'
     ],
     [
         'Flo-Flo', 
         '/Users/dmitryginzburg/UI_example', 
-        'scenes/episodes'
+        'scenes/episodes',
+        [],
+        './Fixies5/assets/RS/RS_Fixies5_v01.ma'
     ],
     [
         'Fixies5', 
@@ -76,7 +80,8 @@ projects_paths = [
                 'Misc.', 
                 'assets/Misc'
             ]
-        ]
+        ],
+        './Fixies5/assets/RS/RS_Fixies5_v01.ma'
     ]
 ]
 
@@ -129,14 +134,14 @@ def readConfig():
         allowed_extensions  = data['allowedExtensions']
         icon_placeholder = data['iconPlaceholder']
         asset_icon_size = data['iconSize']
-
+        rs_file_name = data['iconSize']
         projects_paths.clear()
         
         for i in data['projects']:
             assets_paths = []
             for k in i['assets']:
                     assets_paths.append([k['assetType'],k['assetTypePath']])
-            projects_paths.append([i['projectName'],i['projectPath'],i['episodePath'],assets_paths])
+            projects_paths.append([i['projectName'],i['projectPath'],i['episodePath'],assets_paths,i['rsScene']])
 
         
         #current_project = data['currentProject'] ##
@@ -630,11 +635,19 @@ class MainWindow(QMainWindow):
             if i[0] == self.ui.comboBox_projName.currentText():
                 result = i[2]
         return result
-    
+
     def initEpisode(self):
         if len(self.ui.listWidget_episodes.findItems(self.get_current_episode(), Qt.MatchFlag.MatchExactly)) != 0:
             self.ui.listWidget_episodes.setCurrentItem(self.ui.listWidget_episodes.findItems(self.get_current_episode(), Qt.MatchFlag.MatchExactly)[0])
     
+    def get_rs_file_path(self):
+        result = ''
+        global projects_paths
+        for prj in projects_paths:
+            if prj[0] == self.get_current_project_name():
+                result = prj[4]
+        return result
+
     def updateAssetTypes(self):
         self.ui.comboBox_aTypes.clear()
         atlist  =  []
@@ -836,11 +849,41 @@ class MainWindow(QMainWindow):
 
     # actions
     def createScene(self):
-        print('create scene')
+        if self.ui.tabWidget.currentIndex() == 1:
+            if len(self.ui.tableWidget_scenesTable.selectedItems()) != 0:
+                item = self.ui.tableWidget_scenesTable.selectedItems()[1].data(Qt.UserRole)
+                asset_data = [item[0],item[2]]
+                name = item[0]
+                anim_filename = item[1]
+                render_filename = item[2]
+                rs_filename = self.get_rs_file_path()
+                jam_maya_scene.createRenderScene(name,anim_filename,render_filename,rs_filename)
+                data = self.get_current_assetdata_to_report()
+                self.add_message_to_report(data[1], 0, 'Created')
+        index = self.ui.tableWidget_scenesTable.currentRow()
+        self.updateScenes()
+        self.ui.tableWidget_scenesTable.currentRow()#####
+        print('creating scene')
+
     def open(self):
-        print('open')
+        data = self.get_current_assetdata_to_report()
+        if len(data) != 0:
+            if os.path.isfile(data[1]):
+                jam_maya_scene.openRenderScene(data[1])
+        print('opening element')
+
     def updateScene(self):
+        if (self.ui.tabWidget.currentIndex() == 1)and(len(self.ui.tableWidget_scenesTable.selectedItems()) != 0):
+                item = self.ui.tableWidget_scenesTable.selectedItems()[1].data(Qt.UserRole)
+                asset_data = [item[0],item[2]]
+                name = item[0]
+                anim_filename = item[1]
+                render_filename = item[2]
+                jam_maya_scene. updateRenderScene(name,anim_filename,render_filename)
+                data = self.get_current_assetdata_to_report()
+                self.add_message_to_report(data[1], 0, 'Updated')
         print('update scene')
+
     def publishElement(self):
         path = jam_maya_scene.get_current_scene_path()
         if len(path) != 0:

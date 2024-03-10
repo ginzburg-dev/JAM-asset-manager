@@ -386,7 +386,61 @@ background-color : #464646;</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../icons/denoiser_arrows.png</normaloff>../icons/denoiser_arrows.png</iconset>
+           <normaloff>../icons/denoise.png</normaloff>../icons/denoise.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_statistics">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 1px solid #575757;
+background-color : #464646;</string>
+         </property>
+         <property name="text">
+          <string>Statistics</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../icons/statistics.png</normaloff>../icons/statistics.png</iconset>
          </property>
          <property name="iconSize">
           <size>

@@ -197,13 +197,32 @@ class Ui_jam(object):
         self.toolButton_denoise.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
         icon6 = QIcon()
-        icon6.addFile(u"../icons/denoiser_arrows.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon6.addFile(u"../icons/denoise.png", QSize(), QIcon.Normal, QIcon.Off)
         self.toolButton_denoise.setIcon(icon6)
         self.toolButton_denoise.setIconSize(QSize(40, 40))
         self.toolButton_denoise.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
         self.toolButton_denoise.setAutoRaise(False)
 
         self.horizontalLayout_2.addWidget(self.toolButton_denoise)
+
+        self.toolButton_statistics = QToolButton(self.verticalLayoutWidget_3)
+        self.toolButton_statistics.setObjectName(u"toolButton_statistics")
+        sizePolicy1.setHeightForWidth(self.toolButton_statistics.sizePolicy().hasHeightForWidth())
+        self.toolButton_statistics.setSizePolicy(sizePolicy1)
+        self.toolButton_statistics.setMinimumSize(QSize(80, 70))
+        self.toolButton_statistics.setMaximumSize(QSize(80, 70))
+        self.toolButton_statistics.setBaseSize(QSize(0, 0))
+        self.toolButton_statistics.setFocusPolicy(Qt.NoFocus)
+        self.toolButton_statistics.setStyleSheet(u"border: 1px solid #575757;\n"
+"background-color : #464646;")
+        icon7 = QIcon()
+        icon7.addFile(u"../icons/statistics.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolButton_statistics.setIcon(icon7)
+        self.toolButton_statistics.setIconSize(QSize(40, 40))
+        self.toolButton_statistics.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.toolButton_statistics.setAutoRaise(False)
+
+        self.horizontalLayout_2.addWidget(self.toolButton_statistics)
 
         self.horizontalSpacer_mainPanel = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -234,9 +253,9 @@ class Ui_jam(object):
         self.toolButton_goto.setFocusPolicy(Qt.ClickFocus)
         self.toolButton_goto.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
-        icon7 = QIcon()
-        icon7.addFile(u"../icons/goto.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolButton_goto.setIcon(icon7)
+        icon8 = QIcon()
+        icon8.addFile(u"../icons/goto.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolButton_goto.setIcon(icon8)
 
         self.horizontalLayout_5.addWidget(self.toolButton_goto)
 
@@ -245,9 +264,9 @@ class Ui_jam(object):
         self.toolButton_copyClipboard.setFocusPolicy(Qt.ClickFocus)
         self.toolButton_copyClipboard.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
-        icon8 = QIcon()
-        icon8.addFile(u"../icons/clipboard.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolButton_copyClipboard.setIcon(icon8)
+        icon9 = QIcon()
+        icon9.addFile(u"../icons/clipboard.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolButton_copyClipboard.setIcon(icon9)
 
         self.horizontalLayout_5.addWidget(self.toolButton_copyClipboard)
 
@@ -366,9 +385,9 @@ class Ui_jam(object):
         self.toolButton_aRefresh.setFocusPolicy(Qt.NoFocus)
         self.toolButton_aRefresh.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
-        icon9 = QIcon()
-        icon9.addFile(u"../icons/refresh.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolButton_aRefresh.setIcon(icon9)
+        icon10 = QIcon()
+        icon10.addFile(u"../icons/refresh.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolButton_aRefresh.setIcon(icon10)
         self.toolButton_aRefresh.setIconSize(QSize(20, 30))
         self.toolButton_aRefresh.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 
@@ -561,7 +580,7 @@ class Ui_jam(object):
         self.toolButton_sRefresh.setFocusPolicy(Qt.NoFocus)
         self.toolButton_sRefresh.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
-        self.toolButton_sRefresh.setIcon(icon9)
+        self.toolButton_sRefresh.setIcon(icon10)
         self.toolButton_sRefresh.setIconSize(QSize(20, 20))
         self.toolButton_sRefresh.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 
@@ -706,9 +725,9 @@ class Ui_jam(object):
         self.toolButton_addReport.setFocusPolicy(Qt.NoFocus)
         self.toolButton_addReport.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
-        icon10 = QIcon()
-        icon10.addFile(u"../icons/add_report.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolButton_addReport.setIcon(icon10)
+        icon11 = QIcon()
+        icon11.addFile(u"../icons/add_report.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolButton_addReport.setIcon(icon11)
         self.toolButton_addReport.setIconSize(QSize(20, 20))
         self.toolButton_addReport.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 
@@ -720,9 +739,9 @@ class Ui_jam(object):
         self.toolButton_addNote.setFocusPolicy(Qt.NoFocus)
         self.toolButton_addNote.setStyleSheet(u"border: 1px solid #575757;\n"
 "background-color : #464646;")
-        icon11 = QIcon()
-        icon11.addFile(u"../icons/add_note.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolButton_addNote.setIcon(icon11)
+        icon12 = QIcon()
+        icon12.addFile(u"../icons/add_note.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.toolButton_addNote.setIcon(icon12)
         self.toolButton_addNote.setIconSize(QSize(20, 20))
         self.toolButton_addNote.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 
@@ -834,6 +853,7 @@ class Ui_jam(object):
         self.toolButton_publish.setText(QCoreApplication.translate("jam", u"Publish", None))
         self.toolButton_check.setText(QCoreApplication.translate("jam", u"Check", None))
         self.toolButton_denoise.setText(QCoreApplication.translate("jam", u"Denoise", None))
+        self.toolButton_statistics.setText(QCoreApplication.translate("jam", u"Statistics", None))
         self.toolButton_goto.setText(QCoreApplication.translate("jam", u"->", None))
         self.toolButton_copyClipboard.setText(QCoreApplication.translate("jam", u"CC", None))
         self.label_projName.setText(QCoreApplication.translate("jam", u"Project:", None))

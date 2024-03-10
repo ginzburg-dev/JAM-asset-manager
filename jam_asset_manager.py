@@ -6,11 +6,19 @@ import sys
 import os
 import json
 import shutil
+import importlib
+
 from datetime import datetime
 from functools import partial
 
 from ui.ui_jam import Ui_jam
 from ui.ui_report import Ui_report
+
+import jam_maya_scene
+importlib.reload(jam_maya_scene)
+
+import jam_maya_asset
+importlib.reload(jam_maya_asset)
 
 from PySide2.QtWidgets import QApplication, QMainWindow, QLabel, QListWidgetItem, QTreeWidgetItem, QTableWidgetItem, QListWidgetItem, QAbstractItemView, QTextBrowser, QWidget, QAction
 from PySide2.QtGui import QPixmap, QIcon, QCursor, QColor
@@ -197,7 +205,6 @@ def writeJSON(path, data):
 
     if (complete)and(os.path.exists(path.replace('.json','.jsontmp'))):
         os.remove(path.replace('.json','.jsontmp'))
-
 
 def getProjectPath(name):
     result = ''
@@ -388,45 +395,45 @@ class MainWindow(QMainWindow):
         return result
 
     def updateReportNote(self):
-        self.ui.textBrowser_history.clear()
         data = self.get_current_assetdata_to_report()
-        path = data[1].replace('.'+getExtension(data[1]),'.json')
-        if os.path.exists(path):
-            obj_data = readJSON(path)
-            if len(obj_data) != 0:
-                if len(obj_data['messages']) != 0:
-                    text = ''
-                    for i in obj_data['messages']:
-                        date = i['createdTime']
-                        user = i['user']
-                        hours = i['hours']
-                        body_message = i['message'].split('\n')
-                        if i['type'] == 'report':
-                            header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">Report&nbsp;&nbsp;'+date+'</p>'
-                            header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">'+user+'&nbsp;&nbsp;&nbsp;'+str(hours)+'h</p>'
-                            message = ''
-                            if len(body_message) > 1:
-                                for k in body_message:
-                                    if k != '':
-                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+k+'</p>'
-                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">&nbsp;</p>'
-                            else:
-                                message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message[0]+'</p>'
-                            text += header + message
-                        if i['type'] == 'note':
-                            
-                            header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">Note&nbsp;&nbsp;'+date+'</p>'
-                            header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">'+user+'</p>'
-                            message = ''
-                            if len(body_message) > 1:
-                                for k in body_message:
-                                    if k != '':
-                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#3B453D">'+k+'</p>'
-                                        message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #3B453D">&nbsp;</p>'
-                            else:
-                                message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #3B453D">'+body_message[0]+'</p>'
-                            text += header + message
-            self.ui.textBrowser_history.setHtml(text)
+        if len(data) != 0:
+            self.ui.textBrowser_history.clear()
+            path = data[1].replace('.'+getExtension(data[1]),'.json')
+            if os.path.exists(path):
+                obj_data = readJSON(path)
+                if len(obj_data) != 0:
+                    if len(obj_data['messages']) != 0:
+                        text = ''
+                        for i in obj_data['messages']:
+                            date = i['createdTime']
+                            user = i['user']
+                            hours = i['hours']
+                            body_message = i['message'].split('\n')
+                            if i['type'] == 'report':
+                                header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">Report&nbsp;&nbsp;'+date+'</p>'
+                                header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #4D5CC1">'+user+'&nbsp;&nbsp;&nbsp;'+str(hours)+'h</p>'
+                                message = ''
+                                if len(body_message) > 1:
+                                    for k in body_message:
+                                        if k != '':
+                                            message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+k+'</p>'
+                                            message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">&nbsp;</p>'
+                                else:
+                                    message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #403B45">'+body_message[0]+'</p>'
+                                text += header + message
+                            if i['type'] == 'note':
+                                header = '<p align="right" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">Note&nbsp;&nbsp;'+date+'</p>'
+                                header += '<p align="right" style=" font-style:italic; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #79A762">'+user+'</p>'
+                                message = ''
+                                if len(body_message) > 1:
+                                    for k in body_message:
+                                        if k != '':
+                                            message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#3B453D">'+k+'</p>'
+                                            message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #3B453D">&nbsp;</p>'
+                                else:
+                                    message += '<p align="left" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color: #3B453D">'+body_message[0]+'</p>'
+                                text += header + message
+                self.ui.textBrowser_history.setHtml(text)
 
     def write_prj_state_to_config(self,mode):
         # mode = {'project' , 'asset' , 'episode'}
@@ -469,6 +476,38 @@ class MainWindow(QMainWindow):
         f_u.close()
         #print('Wrote to JSON: ', data_u['currentProject'], ' ', data_u['currentAssetType'], ' ', data_u['currentEpisode'])
 
+    def add_message_to_report(self, path, hours, text):
+        now = datetime.now() # current date and time
+        hours = 0
+        asset_name = os.path.basename(path).replace('.'+getExtension(path),'')
+        asset_type = getExtension(path)
+        json_path = path.replace('.'+getExtension(path),'.json')
+        date_time = now.strftime("%d/%m/%Y %H:%M:%S")
+        data = []
+        report = {
+            "type": "report",
+            "message": text,
+            "user": "user",
+            "createdTime": date_time,
+            "hours": hours
+        }
+        if not os.path.isfile(json_path):
+            data = json_asset_template
+            data['messages'].clear()
+        else:
+            data = readJSON(json_path)
+        data['assetName'] = asset_name
+        data['assetType'] = asset_type
+        if len(data['createdTime']) == 0:
+            data['createdTime'] = date_time
+        data['messages'].append(report)
+        writeJSON(json_path,data)
+        print(json_path)
+        self.updateReportNote()
+
+    def get_current_project_name(self):
+        return self.ui.comboBox_projName.currentText()
+    
     def get_current_project_path(self):
         return getProjectPath(self.ui.comboBox_projName.currentText())
 
@@ -779,6 +818,22 @@ class MainWindow(QMainWindow):
         
         self.filter_assets()
 
+    def is_scene_path(self, path):
+        result = False
+        for proj_path in projects_paths:
+            print(proj_path[1], path)
+            if path.startswith(proj_path[1]+'/scenes/'):
+                result = True
+        return result
+    
+    def is_asset_path(self, path):
+        result = False
+        for proj_path in projects_paths:
+            print(proj_path[1], path)
+            if path.startswith(proj_path[1]+'/assets/'):
+                result = True
+        return result
+
     # actions
     def createScene(self):
         print('create scene')
@@ -787,7 +842,20 @@ class MainWindow(QMainWindow):
     def updateScene(self):
         print('update scene')
     def publishElement(self):
-        print('publish')
+        path = jam_maya_scene.get_current_scene_path()
+        if len(path) != 0:
+            if self.is_scene_path(path):
+                publish_result = jam_maya_scene.publish_scene()
+                print(publish_result)
+                if publish_result:
+                    self.add_message_to_report(path, 0, 'Published')
+            if self.is_asset_path(path):
+                publish_result = jam_maya_asset.publish_asset()
+                print(publish_result)
+                if publish_result:
+                    self.add_message_to_report(path, 0, 'Published')
+        print('publishing')
+
     def importElement(self):
         print('import')
     def denoise(self):
@@ -939,6 +1007,7 @@ class MainWindow(QMainWindow):
         self.ui.toolButton_import.setIcon(QIcon(JAM_path+"/icons/import.png"))
         self.ui.toolButton_aImport.setIcon(QIcon(JAM_path+"/icons/import.png"))
         self.ui.toolButton_denoise.setIcon(QIcon(JAM_path+"/icons/denoise.png"))
+        self.ui.toolButton_statistics.setIcon(QIcon(JAM_path+"/icons/statistics.png"))
         self.ui.toolButton_check.setIcon(QIcon(JAM_path+"/icons/check.png"))
         self.ui.toolButton_aRefresh.setIcon(QIcon(JAM_path+"/icons/refresh.png"))
         self.ui.toolButton_sRefresh.setIcon(QIcon(JAM_path+"/icons/refresh.png"))

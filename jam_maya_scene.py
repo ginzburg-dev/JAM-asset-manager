@@ -1,84 +1,88 @@
 import maya.cmds as cmds
+import os
+import sys
+import os
+import shutil
 
-dropboxDir = "c:/Users/ginzb/I4K Dropbox";
-RSFile = "c:/Ginzburg/Production/Kids/Presets/RS/MG_RS_v02.ma";
+def get_current_scene_path():
+     return cmds.file(q=True, sn=True)
 
-def createRenderScene(name,rsfilename):
-   if len(name.split(' ')) > 2:
-        episode = name.split(' ')[0] + name.split(' ')[1];
-        scene = name.split(' ')[2];
-   else:
-        episode = "MG" + name.split(' ')[0];
-        scene = name.split(' ')[1];
-   
-   animationDir = dropboxDir + "/MG/episodes/" + episode + "/maya/animation/"
-   renderDir = dropboxDir + "/MG/episodes/" + episode + "/render/"
-   renderSceneDir = renderDir + episode + "_" + scene
-   
+def check_quality():
+     result = []
+     width = cmds.getAttr("defaultResolution.width")
+     height = cmds.getAttr("defaultResolution.height")
+     if (width >= 1600)and(height>= 900):
+          result = [1,'']
+     else:
+          result = [0,"The scene wasn't published. Please, change the quality to final."]
+     return result
 
-   animFilePath = animationDir + episode + "_" + scene + ".ma";
-   checkScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
-   renderScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + ".ma";
-   animRefName = "episodes/" + episode + "/render/" + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
+def check_camera_name():
+     result = []
+     name = os.path.basename(cmds.file(q=True, sn=True)).replace('.ma','').replace('.mb','')
+     cameras = cmds.ls(type='camera')
+     for camera_ in cameras:
+          if cmds.getAttr(camera_+'.renderable'):
+               if camera_.startswith(name):
+                    result = [1,'']
+               else:
+                    result = [0,camera_+" is an incorrect camera name. Please change the camera name to match the scene name."]
+                    cmds.warning( camera_, ' is an incorrect camera name. Please change the camera name to match the scene name.')
+     return result
 
-   # create render directory
-   cmds.sysFile( renderSceneDir, makeDir=True )# Windows
-   # copy check_v01
-   cmds.sysFile( animFilePath, copy=checkScene )# Windows
-   # copy RS
-   cmds.sysFile( rsfilename, copy=renderScene )# Windows
-   # open renderScene
-   cmds.file(new=True, force=True, bls=True)
-   cmds.file( renderScene, open=True )
+def scene_check_message():
+     result = True
+     result_message =[]
+     messages = []
+     messages.append(check_camera_name())
+     messages.append(check_quality())
+     text = ''
+     for message in messages:
+          if message[0] == 0:
+               text += message[1]+'\n\n'
+               result = False
+     if result:
+          result_message =[1,'']
+     else:
+          result_message =[0,text]
 
+     return result_message
 
-   #ref
-   cmds.file(animRefName, reference=True, mergeNamespacesOnClash=True, namespace='anim');
+def createRenderScene(name,anim_filename,render_filename,rs_filename):
+     anim_ref_name = render_filename.replace(name+'.ma',name+'_check_v01.ma')
+     # create render directory
+     os.makedirs(os.path.dirname(render_filename), exist_ok=True)
+     # copy check_v01
+     shutil.copy(anim_filename, render_filename.replace(name+'.ma',name+'_check_v01.ma'))
+     # copy RS
+     shutil.copy(rs_filename, render_filename)
+     # open renderScene
+     cmds.file(new=True, force=True, bls=True)
+     cmds.file(render_filename, open=True )
+     #ref
+     cmds.file(anim_ref_name, reference=True, mergeNamespacesOnClash=True, namespace='anim');
 
-def updateRenderScene(name,rsfilename):
-   if len(name.split(' ')) > 2:
-        episode = name.split(' ')[0] + name.split(' ')[1];
-        scene = name.split(' ')[2];
-   else:
-        episode = "MG" + name.split(' ')[0];
-        scene = name.split(' ')[1];
-   
-   animationDir = dropboxDir + "/MG/episodes/" + episode + "/maya/animation/"
-   renderDir = dropboxDir + "/MG/episodes/" + episode + "/render/"
-   renderSceneDir = renderDir + episode + "_" + scene
-   
+def openRenderScene():
+     return
 
-   animFilePath = animationDir + episode + "_" + scene + ".ma";
-   checkScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
-   renderScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + ".ma";
-   animRefName = "episodes/" + episode + "/render/" + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
+def updateRenderScene(name,anim_filename,render_filename):
+     anim_ref_name = render_filename.replace(name+'.ma',name+'_check_v01.ma')
+     shutil.copy(anim_filename, anim_ref_name)
+     # open renderScene
+     cmds.file(new=True, force=True, bls=True)
+     cmds.file(render_filename, open=True )
 
-   # create render directory
-   #cmds.sysFile( renderSceneDir, makeDir=True )# Windows
-   # copy check_v01
-   cmds.sysFile( animFilePath, copy=checkScene )# Windows
-   # copy RS
-   #cmds.sysFile( rsfilename, copy=renderScene )# Windows
-   # open renderScene
-   cmds.file(new=True, force=True, bls=True)
-   cmds.file( renderScene, open=True )
-
-
-   #ref
-   #cmds.file(animRefName, reference=True, mergeNamespacesOnClash=True, namespace='anim');
-
-
-result = cmds.promptDialog(
-		title='Create Render Scene KIDS',
-		message='Enter Name:',
-		button=['OK', 'Cancel'],
-		defaultButton='OK',
-		cancelButton='Cancel',
-		dismissString='Cancel')
-
-if result == 'OK':
-	text = cmds.promptDialog(query=True, text=True);
-	if len(text.split(' ')) > 1:
-	    createRenderScene(text,RSFile);
-	else:
-	    print "Wrong Scene Name";
+def publish_scene():
+     check_message = scene_check_message()
+     result = False
+     if len(cmds.file(q=True, sn=True)) != 0:
+          if check_message[0] == 0:
+               cmds.confirmDialog(title= "Warning. Scene wasn't publish", message = check_message[1], button =['OK'])
+          else:
+               try:
+                    cmds.file(save=True)
+                    cmds.confirmDialog(title= "The publish was successful!", message = '', button =['OK'])
+                    result = True
+               except:
+                    print("Publishing wasn't successful")
+     return result

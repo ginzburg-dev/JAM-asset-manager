@@ -48,6 +48,14 @@ def scene_check_message():
 
      return result_message
 
+def check_scene():
+     result = scene_check_message()
+     if result[0] == 1:
+          cmds.confirmDialog(title= "Success", message = 'The scene was checked successfully.', button =['OK'])
+     if result[0] == 0:
+          cmds.confirmDialog(title= "Warning", message = result[1], button =['OK'])
+
+
 def createRenderScene(name,anim_filename,render_filename,rs_filename):
      fileCheckState = cmds.file(q=True, modified=True)
      current_scene_name = cmds.file(q=True, sn=True)
@@ -82,22 +90,28 @@ def openRenderScene(path):
      cmds.file(path, o=True, force=True)
 
 def updateRenderScene(name,anim_filename,render_filename):
-     fileCheckState = cmds.file(q=True, modified=True)
-     current_scene_name = cmds.file(q=True, sn=True)
-     if fileCheckState:
-          dialog_message = cmds.confirmDialog(title= "Save Changes", message = 'Save changes to '+current_scene_name+'?', button =['Save',"Don't Save", "Cancel"])
-          if dialog_message == 'Cancel':
-               return
-          if dialog_message == 'Save':
-               cmds.file( save=True)
+     result = False
      if os.path.isfile(render_filename):
+          fileCheckState = cmds.file(q=True, modified=True)
+          current_scene_name = cmds.file(q=True, sn=True)
+          if fileCheckState:
+               dialog_message = cmds.confirmDialog(title= "Save Changes", message = 'Save changes to '+current_scene_name+'?', button =['Save',"Don't Save", "Cancel"])
+               if dialog_message == 'Cancel':
+                    return
+               if dialog_message == 'Save':
+                    cmds.file( save=True)
+     
           anim_ref_name = render_filename.replace(name+'.ma',name+'_check_v01.ma')
           shutil.copy(anim_filename, anim_ref_name)
           # open renderScene
           cmds.file(new=True, force=True, bls=True)
           cmds.file(render_filename, open=True )
+          result = True
      else:
           cmds.warning("The render scene is empty. Please create a scene to be able to update it")
+          cmds.confirmDialog(title= "Warning", message = 'The render scene is empty. Please create a scene to be able to update it', button =['OK'])
+
+     return result
 
 def publish_scene():
      check_message = scene_check_message()

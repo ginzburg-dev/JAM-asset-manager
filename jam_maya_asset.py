@@ -5,7 +5,11 @@ import os
 import shutil
 
 def import_asset(path):
-     cmds.file(path,mergeNamespacesOnClash=True,ra=True,namespace=":",i=True)
+     result = False
+     if os.path.isfile(path):
+          cmds.file(path,mergeNamespacesOnClash=True,ra=True,namespace=":",i=True)
+          result = True
+     return result
 
 def asset_check_message():
      result = True

@@ -1,3 +1,7 @@
+##
+## Check if camera not set
+##
+
 import maya.cmds as cmds
 import os
 import sys
@@ -31,6 +35,9 @@ def check_camera_name():
      return result
 
 def scene_check_message():
+     ##
+     ## Check if camera not set
+     ##
      result = True
      result_message =[]
      messages = []
@@ -118,7 +125,7 @@ def publish_scene():
      result = False
      if len(cmds.file(q=True, sn=True)) != 0:
           if check_message[0] == 0:
-               cmds.confirmDialog(title= "Warning: Scene wasn't publish", message = check_message[1], button =['OK'])
+               cmds.confirmDialog(title= "Warning: Scene wasn't published", message = check_message[1], button =['OK'])
           else:
                try:
                     cmds.file(save=True)

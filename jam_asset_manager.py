@@ -1,5 +1,8 @@
+# ADD READ FROM JSOM to module
+# Read from config JAM_path
+
 import sys
-JAM_path = '/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager'
+JAM_path = '/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager' 
 sys.path.append(JAM_path)
 
 import sys
@@ -9,6 +12,8 @@ import shutil
 import importlib
 
 import maya.cmds as cmds
+from shiboken2 import wrapInstance 
+from maya import OpenMayaUI as omui 
 
 from datetime import datetime
 from functools import partial
@@ -1053,8 +1058,14 @@ class MainWindow(QMainWindow):
         self.ui.actionImport.triggered.connect(self.importElement)
         self.ui.actionCheck.triggered.connect(self.checkElement)
         self.ui.actionDenoise.triggered.connect(self.denoise)
-        
-        
-if __name__ == "__main__":
-    widget = MainWindow()
-    widget.show()
+
+#if __name__ == "__main__":
+#    widget = MainWindow()
+#    widget.show()
+
+def jam_asset_manager_run():
+    mayaMainWindowPtr = omui.MQtUtil.mainWindow() 
+    mayaMainWindow= wrapInstance(int(mayaMainWindowPtr), QWidget)
+    JAM_window = MainWindow(parent=mayaMainWindow)
+    JAM_window.show()
+    return JAM_window

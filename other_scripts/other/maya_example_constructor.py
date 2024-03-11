@@ -1,10 +1,5 @@
 import maya.cmds as cmds
 
-n = 'te\nte\n\nte\n'
-k = 'tetetete'
-print(len(k.split('\n')))
-
-
 path = '/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5/scenes/episodes/ep260/maya/animation/'
 rpath = '/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5/scenes/episodes/ep260/render/'
 pref = 'ep260_'

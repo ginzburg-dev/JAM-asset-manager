@@ -8,6 +8,8 @@ import json
 import shutil
 import importlib
 
+import maya.cmds as cmds
+
 from datetime import datetime
 from functools import partial
 
@@ -19,6 +21,12 @@ importlib.reload(jam_maya_scene)
 
 import jam_maya_asset
 importlib.reload(jam_maya_asset)
+
+import jam_statistics
+importlib.reload(jam_statistics)
+
+import jam_denoise
+importlib.reload(jam_denoise)
 
 from PySide2.QtWidgets import QApplication, QMainWindow, QLabel, QListWidgetItem, QTreeWidgetItem, QTableWidgetItem, QListWidgetItem, QAbstractItemView, QTextBrowser, QWidget, QAction
 from PySide2.QtGui import QPixmap, QIcon, QCursor, QColor
@@ -85,10 +93,6 @@ projects_paths = [
     ]
 ]
 
-#current_project = 'Kids'
-#current_asset_type = 'Master Lights'
-#current_episode = 'MG049'
-
 current_user_state = [
     'Fixies5',
     [
@@ -118,8 +122,6 @@ def readConfig():
     global icon_placeholder
     global asset_icon_size
     global current_user_state
-    #global current_asset_type
-    #global current_episode
     global projects_paths
     
     if os.path.exists(json_config_path):
@@ -128,13 +130,10 @@ def readConfig():
         # a dictionary
         data = json.load(f)
         # Iterating through the json
-        # list
-
         excluded_names = data['excludedNames']
         allowed_extensions  = data['allowedExtensions']
         icon_placeholder = data['iconPlaceholder']
         asset_icon_size = data['iconSize']
-        rs_file_name = data['iconSize']
         projects_paths.clear()
         
         for i in data['projects']:
@@ -143,28 +142,16 @@ def readConfig():
                     assets_paths.append([k['assetType'],k['assetTypePath']])
             projects_paths.append([i['projectName'],i['projectPath'],i['episodePath'],assets_paths,i['rsScene']])
 
-        
-        #current_project = data['currentProject'] ##
-        #current_asset_type = data['currentAssetType'] ##
-        #current_episode = data['currentEpisode'] ##
-
         current_user_state[0] = data['currentProject']
 
         if os.path.exists(json_user_config_path):
             f_u = open(json_user_config_path)
             data_u = json.load(f_u)
-            #current_project = data_u['currentProject'] ##
-            #current_asset_type = data_u['currentAssetType'] ##
-            #current_episode = data_u['currentEpisode'] ##
             current_user_state[0] = data_u['currentProject']
             current_user_state[1] = []
             for i in data_u['configs']:
                 current_user_state[1].append([i['projectName'],i['currentAssetType'],i['currentEpisode']])
             f_u.close()
-        print('PP: ',projects_paths)
-        print('CURRENT_USER_STATE: ', current_user_state)
-
-        # Closing file
         f.close()
 
 def read_user_config():
@@ -178,8 +165,6 @@ def read_user_config():
             f_u.close()
         print('PP: ',projects_paths)
         print('CURRENT_USER_STATE: ', current_user_state)
-        
-
 
 def readJSON(path):
     data = []
@@ -188,7 +173,6 @@ def readJSON(path):
         # returns JSON object as
         # a dictionary
         data = json.load(f)
-
         # Closing file
         f.close()
     return data
@@ -207,9 +191,12 @@ def writeJSON(path, data):
     with open(path, 'w') as f:
         json.dump(data, f)
         f.close()
-
     if (complete)and(os.path.exists(path.replace('.json','.jsontmp'))):
         os.remove(path.replace('.json','.jsontmp'))
+
+def addToClipBoard(text):
+    command = 'echo | set /p nul=' + text.strip() + '| clip'
+    os.system(command)
 
 def getProjectPath(name):
     result = ''
@@ -277,13 +264,11 @@ def load_project_structure(startpath, tree):
         if (not isThere(element,excluded_names)) and (os.path.isdir(path_info)):
             parent_itm = QTreeWidgetItem(tree, [os.path.basename(element)])
             parent_itm.setData(0, Qt.UserRole, path_info)
-            #print(path_info)
             if os.path.isdir(path_info):
                 load_project_structure(path_info, parent_itm)
-                parent_itm.setIcon(0, QIcon(JAM_path+'/icons/folder.png')) #ADD
+                parent_itm.setIcon(0, QIcon(JAM_path+'/icons/folder.png'))
             else:
-                #parent_itm.setIcon(0, QIcon('assets/file.ico')). ADD
-                ik = 0
+                pass
 
 def get_episodes_list(project_name):
     episode_path = getProjectPath(project_name) +"/" + getEpisodePath(project_name)
@@ -292,7 +277,6 @@ def get_episodes_list(project_name):
         path_info = episode_path + "/" + element
         if (not isThere(element,excluded_names)) and (os.path.isdir(path_info)):
             result.append([os.path.basename(element), path_info])
-    print(result)
     return result
 
 def check_animscene_name(episode,name):
@@ -300,7 +284,6 @@ def check_animscene_name(episode,name):
     if len(name.split(episode+'_')) == 2:
         if (len(name.split(episode+'_')[1]) == 6) and (name.split(episode+'_')[1].endswith('.ma')):
             result = True
-
     return result
 
 def get_scenes_list(episode,project_name):
@@ -314,20 +297,16 @@ def get_scenes_list(episode,project_name):
             render_meta_path = render_path + "/" + anim_item.replace('.'+getExtension(anim_item),'')+'/'+anim_item
             if (not isThere(anim_item,excluded_names)) and (os.path.isfile(path_info)) and (check_animscene_name(episode,anim_item)):
                 anim_scenes.append([anim_item.replace('.'+getExtension(anim_item),''),path_info,render_meta_path,0])
-
         for render_item in os.listdir(render_path):
             path_info = render_path + "/" + render_item+'/'+render_item+'.ma'
             if (not isThere(path_info,excluded_names)) and (os.path.isfile(path_info)):
                 render_scenes.append([render_item.replace('.'+getExtension(render_item),''),path_info])
-
         for i in anim_scenes:
             for k in render_scenes:
                 if i[0] == k[0]:
                     i[3] = 1
                     i[2] = k[1]
                     break
-
-    print(anim_scenes)
     return anim_scenes
 
 class ReportWindow(QMainWindow):
@@ -337,12 +316,10 @@ class ReportWindow(QMainWindow):
 
     def sendReportNote(self,parent,type):
         obj_data = parent.get_current_assetdata_to_report()
-        print('DATA0_!!!!: ', obj_data)
         now = datetime.now() # current date and time
         hours = self.ui.spinBox_hours.value()
         text = self.ui.textEdit_maintext.toPlainText()
         path = obj_data[1].replace('.'+getExtension(obj_data[1]),'.json')
-        print('DATA1_!!!!: ', text,path)
         date_time = now.strftime("%d/%m/%Y %H:%M:%S")
         data = []
         report = {
@@ -357,14 +334,12 @@ class ReportWindow(QMainWindow):
             data['messages'].clear()
         else:
             data = readJSON(path)
-        print(data,obj_data)
         data['assetName'] = obj_data[0]
         data['assetType'] = getExtension(obj_data[1])
         if len(data['createdTime']) == 0:
             data['createdTime'] = date_time
         data['messages'].append(report)
         writeJSON(path,data)
-        print('DATA_!!!!: ', data)
         parent.updateReportNote()
         self.close()
 
@@ -469,17 +444,13 @@ class MainWindow(QMainWindow):
                 json_user_cfg['currentEpisode'] = self.ui.listWidget_episodes.currentItem().text()
             else:
                 json_user_cfg['currentEpisode'] = ''
-
             data_u['configs'].append(json_user_cfg)
-
         if init_size == current_size:
             with open(json_user_config_path, 'w') as f:
                 json.dump(data_u, f)
             f.close()
             os.remove(json_user_config_path.replace('.json','.jsontmp'))
-
         f_u.close()
-        #print('Wrote to JSON: ', data_u['currentProject'], ' ', data_u['currentAssetType'], ' ', data_u['currentEpisode'])
 
     def add_message_to_report(self, path, hours, text):
         now = datetime.now() # current date and time
@@ -507,7 +478,6 @@ class MainWindow(QMainWindow):
             data['createdTime'] = date_time
         data['messages'].append(report)
         writeJSON(json_path,data)
-        print(json_path)
         self.updateReportNote()
 
     def get_current_project_name(self):
@@ -541,10 +511,7 @@ class MainWindow(QMainWindow):
                 element_name = splitted[len(splitted)-1]
             for i in range(1,len(splitted)-1):
                 dir_path += splitted[i] + '/'
-        print(proj_name,' ',element_name,' ',dir_path, ' ',self.isAsset(dir_path))
-
         if self.isAsset(dir_path):
-            print('this is the asset')
             self.ui.tabWidget.setCurrentWidget(self.ui.tabWidget.findChild(QWidget, 'tab'))
             found_items_buff = self.ui.listWidget_assets.findItems(element_name,Qt.MatchFlag.MatchExactly)
             found_items = []
@@ -552,18 +519,12 @@ class MainWindow(QMainWindow):
                 path_tmp = i.data(Qt.UserRole)[2]
                 if path_tmp.startswith(dir_path+element_name):
                     found_items.append(i)
-            print(found_items)
             if len(found_items) != 0:
                 for i in found_items:
-                    print('TMP: ', dir_path+element_name+'.'+getExtension(i.data(Qt.UserRole)[2]),'   ',dir_path+element_name+'.'+getExtension(i.data(Qt.UserRole)[2]))
-                    print('add: ', i.data(Qt.UserRole)[2])
                     if i.data(Qt.UserRole)[2] == dir_path+element_name+'.'+getExtension(i.data(Qt.UserRole)[2]):
-                        print('FOUND: ', i.data(Qt.UserRole)[2])
                         self.ui.listWidget_assets.setCurrentItem(i)
                         self.ui.listWidget_assets.scrollToItem(i,QAbstractItemView.PositionAtTop)
-                        # add FOCUS
             else:
-                    print(dir_path[:-1],os.listdir(dir_path))
                     for i in os.listdir(dir_path):
                         path = dir_path+i
                         if (path.startswith(dir_path+element_name))and(isAllowedExtension(path)):
@@ -576,32 +537,24 @@ class MainWindow(QMainWindow):
                                 if len(current_item) != 0:
                                     self.ui.listWidget_assets.setCurrentItem(current_item[0])
         else:
-            print('this is the scene')
             self.ui.tabWidget.setCurrentWidget(self.ui.tabWidget.findChild(QWidget, 'tab_2'))
             found_items_buff = self.ui.tableWidget_scenesTable.findItems(element_name,Qt.MatchFlag.MatchExactly)
-            #print(found_items_buff[0].data(Qt.UserRole))
             found_items = []
             for i in found_items_buff:
                 path_tmp = i.data(Qt.UserRole)[2]
                 if path_tmp.startswith(dir_path+element_name):
                     found_items.append(i)
-            print(found_items)
             if len(found_items) != 0:
                 for i in found_items:
-                    print('TMP: ', dir_path+element_name+'.'+getExtension(i.data(Qt.UserRole)[2]),'   ',dir_path+element_name+'.'+getExtension(i.data(Qt.UserRole)[2]))
-                    print('add: ', i.data(Qt.UserRole)[2])
                     if i.data(Qt.UserRole)[2] == dir_path+element_name+'.'+getExtension(i.data(Qt.UserRole)[2]):
-                        print('FOUND: ', i.data(Qt.UserRole)[2])
                         self.ui.tableWidget_scenesTable.setCurrentItem(i)
                         self.ui.tableWidget_scenesTable.scrollToItem(i,QAbstractItemView.PositionAtTop)
-                        # add FOCUS
             else:
                     files_ = []
                     if not os.path.exists(dir_path):
                         files_.append(element_name+'.ma')
                     else:
                         files_ = os.listdir(dir_path)
-                    print(dir_path[:-1],files_,os.path.exists(dir_path))
                     for i in files_:
                         path = dir_path+i
                         if (path.startswith(dir_path+element_name))and(isAllowedExtension(path)):
@@ -613,9 +566,7 @@ class MainWindow(QMainWindow):
                                     for k in current_item:
                                         if k.data(Qt.UserRole)[2] == dir_path+element_name+'.'+getExtension(k.data(Qt.UserRole)[2]):
                                             self.ui.tableWidget_scenesTable.setCurrentItem(current_item[0])
-
-
-
+    
     def updateProject(self):
         self.ui.comboBox_projName.clear()
         for i in projects_paths:
@@ -663,7 +614,6 @@ class MainWindow(QMainWindow):
         parent_itm = QTreeWidgetItem(projectTreeWidget, ['[root]'])
         parent_itm.setIcon(0, QIcon(JAM_path+'/icons/base_01.png'))
         parent_itm.setData(0, Qt.UserRole, path)
-        print('path:   ', path)
         if len(path) != 0:
             load_project_structure(path,parent_itm)
         self.ui.treeWidget_assetFolders.expandAll()
@@ -677,12 +627,8 @@ class MainWindow(QMainWindow):
         for i in list:
             listItem = QListWidgetItem(i[0])
             listItem.setData(Qt.UserRole,i[1])
-            #new_item_status = QTableWidgetItem()
-            #new_item_scene = QTableWidgetItem()
-            #new_item_note = QTableWidgetItem()
-            #new_item_scene.setData(Qt.UserRole,item)
             self.ui.listWidget_episodes.addItem(listItem)
-
+    
     def getAssetDir(self):
         print(self.ui.treeWidget_assetFolders.currentItem().data(0, Qt.UserRole))
         #path = getAssetPath(self.ui.comboBox_aTypes.currentText(),self.ui.comboBox_projName.currentText())
@@ -693,19 +639,16 @@ class MainWindow(QMainWindow):
             icon_path = get_preview_path(item)
         else:
             icon_path = JAM_path+'/icons/'+icon_placeholder
-        #scaled(QSize(200, 200)
         icoPixmap = QPixmap(icon_path)
         w = icoPixmap.width()
         h = icoPixmap.height()
         scaled = QPixmap()
-        #scaled = icoPixmap.scaled(QSize(200,200), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
         if w > h:
             dif = (w-h)/2
             scaled = icoPixmap.copy(QRect(dif,0,min(w,h),min(w,h)))
         if w <= h:
             dif = (h-w)/2
             scaled = icoPixmap.copy(QRect(0,dif,min(w,h),min(w,h)))
-        #scaled.copy(QRect(0,0,10,10))
         icon = QIcon(scaled)
         new_item = QListWidgetItem(icon,item[0])
         new_item.setData(Qt.UserRole,item)
@@ -741,12 +684,8 @@ class MainWindow(QMainWindow):
                 element_name = splitted[len(splitted)-1]
             for i in range(1,len(splitted)-1):
                 dir_path += splitted[i] + '/'
-        print(proj_name,' ',element_name,' ',dir_path, ' ',self.isAsset(dir_path))
-
         if os.path.isfile(dir_path+element_name+'.ma'):
             exist = 1
-            print('ex: ',exist)
-
         status = 'ready to start'
         color = QColor(114,183,245) #blue color
         if exist:
@@ -759,7 +698,6 @@ class MainWindow(QMainWindow):
         new_item_note = QTableWidgetItem()
         tmp = '/render/'+element_name+'/'
         list = [element_name,dir_path.replace(tmp,'/maya/animation/')+element_name+'.ma',dir_path+element_name+'.ma',exist]
-        print(list)
         new_item_scene.setData(Qt.UserRole,list)
 
         self.ui.tableWidget_scenesTable.setItem(0,0,new_item_status)
@@ -768,15 +706,13 @@ class MainWindow(QMainWindow):
 
     def updateScenes(self):
         self.ui.tableWidget_scenesTable.clearContents()
-        global global_scene_list # initialize globality
+        global global_scene_list
         global_scene_list.clear()
         getEpisodeSelected = self.ui.listWidget_episodes.currentItem()
         if getEpisodeSelected != None:
             episode = getEpisodeSelected.text()
             list = []
-            print('EPISODE: ',episode)
             list = get_scenes_list(episode,self.ui.comboBox_projName.currentText())
-            print('LIST: ',list)
             self.ui.tableWidget_scenesTable.setRowCount(len(list)) 
             for i in enumerate(list):
                 status = 'ready to start'
@@ -804,37 +740,29 @@ class MainWindow(QMainWindow):
     def updateAssets(self):
         self.ui.listWidget_assets.clear()
         self.ui.listWidget_assets.setIconSize(QSize(asset_icon_size,asset_icon_size))
-
         # insert asset folder path when click
         asset_path = []
         getSelected = self.ui.treeWidget_assetFolders.selectedItems()
         item_data = ''
-
         if getSelected:
             baseNode = getSelected[0]
             qmIndex = self.ui.treeWidget_assetFolders.indexFromItem(baseNode)
             item_data = qmIndex.data(Qt.UserRole)
-            #print(item_data)
         if len(item_data) !=  0:
             asset_path = getAssetsPathsList(item_data)
         else:
             asset_path = getAssetsPathsList(getAssetPath(self.ui.comboBox_aTypes.currentText(),self.ui.comboBox_projName.currentText()))
-        #print(asset_path)
-
         #asset path structure [ 'name without .ext' , 'asste folder path' ,  'full path' ]
         global global_asset_list
         global_asset_list.clear()
-        # clear global var
         for i in asset_path:
-            global_asset_list.append(i) # send list of found assets to global var
+            global_asset_list.append(i) # send list of found assets to the global var
             self.createAssetItem(i)
-        
         self.filter_assets()
 
     def is_scene_path(self, path):
         result = False
         for proj_path in projects_paths:
-            print(proj_path[1], path)
             if path.startswith(proj_path[1]+'/scenes/'):
                 result = True
         return result
@@ -842,7 +770,6 @@ class MainWindow(QMainWindow):
     def is_asset_path(self, path):
         result = False
         for proj_path in projects_paths:
-            print(proj_path[1], path)
             if path.startswith(proj_path[1]+'/assets/'):
                 result = True
         return result
@@ -862,7 +789,7 @@ class MainWindow(QMainWindow):
                 self.add_message_to_report(data[1], 0, 'Created')
         index = self.ui.tableWidget_scenesTable.currentRow()
         self.updateScenes()
-        self.ui.tableWidget_scenesTable.currentRow()#####
+        self.ui.tableWidget_scenesTable.selectRow(index)
         print('creating scene')
 
     def open(self):
@@ -879,37 +806,56 @@ class MainWindow(QMainWindow):
                 name = item[0]
                 anim_filename = item[1]
                 render_filename = item[2]
-                jam_maya_scene. updateRenderScene(name,anim_filename,render_filename)
-                data = self.get_current_assetdata_to_report()
-                self.add_message_to_report(data[1], 0, 'Updated')
-        print('update scene')
+                result_message = jam_maya_scene.updateRenderScene(name,anim_filename,render_filename)
+                if result_message:
+                    data = self.get_current_assetdata_to_report()
+                    self.add_message_to_report(data[1], 0, 'Updated')
+        print('updating scene')
 
     def publishElement(self):
         path = jam_maya_scene.get_current_scene_path()
         if len(path) != 0:
             if self.is_scene_path(path):
                 publish_result = jam_maya_scene.publish_scene()
-                print(publish_result)
                 if publish_result:
                     self.add_message_to_report(path, 0, 'Published')
             if self.is_asset_path(path):
                 publish_result = jam_maya_asset.publish_asset()
-                print(publish_result)
                 if publish_result:
                     self.add_message_to_report(path, 0, 'Published')
         print('publishing')
 
     def importElement(self):
+        path = self.get_current_assetdata_to_report()[1]
+        if len(path) != 0:
+            if self.is_asset_path(path):
+                result_message = jam_maya_asset.import_asset(path)
         print('import')
+
     def denoise(self):
+        #----------------------------------------------
+        # For commercial version only
+        #----------------------------------------------
         print('denoise')
+
     def checkElement(self):
-        print('check')
+        jam_maya_scene.check_scene()
+        print('checking')
 
     def refreshAssets(self):
+        self.ui.comboBox_aTypes.clear()
+        self.ui.treeWidget_assetFolders.clear()
+        self.ui.listWidget_assets.clear()
+        self.updateAssetTypes()
+        self.updateAssetTree()
+        self.updateAssets()
         print('refresh assets')
 
     def refreshScenes(self):
+        index = self.ui.listWidget_episodes.currentRow()
+        self.updateEpisodeList()
+        self.ui.listWidget_episodes.setCurrentRow(index)
+        self.updateScenes()
         print('refresh scenes')
 
     def goToAsset(self):
@@ -925,6 +871,8 @@ class MainWindow(QMainWindow):
         print('add note')
 
     def copyToClipboard(self):
+        path = self.ui.lineEdit_fullPath.text()
+        #addToClipBoard(path)
         print('copy to clipboard')
 
     def click_on_asset(self):
@@ -937,55 +885,36 @@ class MainWindow(QMainWindow):
 
     def filter_scenes(self):
         self.ui.tableWidget_scenesTable.clearContents()
-        print(self.ui.lineEdit_scenes_filter.text())
         items = []
         global global_scene_list
-        print(global_scene_list)
         filter_text = self.ui.lineEdit_scenes_filter.text()
         for i in global_scene_list:
             sname = i[1]
             name = sname.split('_')
-            print(name)
             numbers_name = ''.join(i for i in name[0] if i.isdigit())+' '+''.join(i for i in name[1] if i.isdigit())
             numbers_name_=numbers_name.replace(' ','_')
             int_name = str(int(''.join(i for i in name[0] if i.isdigit())))+' '+str(int(''.join(i for i in name[1] if i.isdigit())))
             int_name_=int_name.replace(' ','_')
-
-            print(numbers_name)
-            print(numbers_name_)
-            print(int_name)
-            print(int_name_)
-
             if (numbers_name.startswith(filter_text))or(int_name.startswith(filter_text))or(numbers_name_.startswith(filter_text))or(int_name_.startswith(filter_text)):
-                print('catch ', i)
                 items.append(i)
-        #items_tmp = self.ui.listWidget_assets.findItems(self.ui.lineEdit_filter.text(),Qt.MatchFlag.MatchStartsWith)
         self.updateScenes_from_list(items)
-
-        print('filtering scenes')
 
     def filter_assets(self):
         self.ui.listWidget_assets.clear()
-        print(self.ui.lineEdit_filter.text())
         items = []
         global global_asset_list
         for i in global_asset_list:
-            print(i)
             if i[0].startswith(self.ui.lineEdit_filter.text()):
-                print('catch')
                 items.append(i)
-        #items_tmp = self.ui.listWidget_assets.findItems(self.ui.lineEdit_filter.text(),Qt.MatchFlag.MatchStartsWith)
         for i in items:
             self.createAssetItem(i)
-        print('filtering assets')
-
+    
     def asset_tree_clicked(self):
         gp = QCursor.pos()
         lp = self.ui.treeWidget_assetFolders.viewport().mapFromGlobal(gp)
         ix_ = self.ui.treeWidget_assetFolders.indexAt(lp)
-        print('not')
         if ix_.isValid():
-            print('ix_')
+            pass
 
     def get_object_outline_path(self,data):
         proj_name = self.ui.comboBox_projName.currentText()
@@ -1124,7 +1053,6 @@ class MainWindow(QMainWindow):
         self.ui.actionImport.triggered.connect(self.importElement)
         self.ui.actionCheck.triggered.connect(self.checkElement)
         self.ui.actionDenoise.triggered.connect(self.denoise)
-        #self.ui.setStyleSheet(u"border: 1px solid #C4C4C3;")
         
         
 if __name__ == "__main__":

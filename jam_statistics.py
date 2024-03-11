@@ -1,84 +1,43 @@
 import maya.cmds as cmds
+import os
+import sys
+import os
+import shutil
 
-dropboxDir = "c:/Users/ginzb/I4K Dropbox";
-RSFile = "c:/Ginzburg/Production/Kids/Presets/RS/MG_RS_v02.ma";
+from datetime import datetime
+from functools import partial
 
-def createRenderScene(name,rsfilename):
-   if len(name.split(' ')) > 2:
-        episode = name.split(' ')[0] + name.split(' ')[1];
-        scene = name.split(' ')[2];
-   else:
-        episode = "MG" + name.split(' ')[0];
-        scene = name.split(' ')[1];
-   
-   animationDir = dropboxDir + "/MG/episodes/" + episode + "/maya/animation/"
-   renderDir = dropboxDir + "/MG/episodes/" + episode + "/render/"
-   renderSceneDir = renderDir + episode + "_" + scene
-   
+from PySide2.QtWidgets import QApplication, QMainWindow, QLabel, QListWidgetItem, QTreeWidgetItem, QTableWidgetItem, QListWidgetItem, QAbstractItemView, QTextBrowser, QWidget, QAction
+from PySide2.QtGui import QPixmap, QIcon, QCursor, QColor
+from PySide2.QtCore import Qt, QSize, QRect, QModelIndex
 
-   animFilePath = animationDir + episode + "_" + scene + ".ma";
-   checkScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
-   renderScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + ".ma";
-   animRefName = "episodes/" + episode + "/render/" + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
+def calculate_efficiency(start_date, end_date, format, data_types):
+     #----------------------------------------------
+     # For commercial version only
+     #----------------------------------------------
+     pass
 
-   # create render directory
-   cmds.sysFile( renderSceneDir, makeDir=True )# Windows
-   # copy check_v01
-   cmds.sysFile( animFilePath, copy=checkScene )# Windows
-   # copy RS
-   cmds.sysFile( rsfilename, copy=renderScene )# Windows
-   # open renderScene
-   cmds.file(new=True, force=True, bls=True)
-   cmds.file( renderScene, open=True )
+def compare_data(first_dataset, second_dataset, start_date, end_date, format, data_types):
+     #----------------------------------------------
+     # For commercial version only
+     #----------------------------------------------
+     pass
+
+def calculate_AI_prediction(start_date, end_date, data_types):
+     #----------------------------------------------
+     # For commercial version only
+     #----------------------------------------------
+     pass
 
 
-   #ref
-   cmds.file(animRefName, reference=True, mergeNamespacesOnClash=True, namespace='anim');
+def get_raw_statistics(start_date, end_date, data_types):
+     #----------------------------------------------
+     # For commercial version only
+     #----------------------------------------------
+     pass
 
-def updateRenderScene(name):
-   if len(name.split(' ')) > 2:
-        episode = name.split(' ')[0] + name.split(' ')[1];
-        scene = name.split(' ')[2];
-   else:
-        episode = "MG" + name.split(' ')[0];
-        scene = name.split(' ')[1];
-   
-   animationDir = dropboxDir + "/MG/episodes/" + episode + "/maya/animation/"
-   renderDir = dropboxDir + "/MG/episodes/" + episode + "/render/"
-   renderSceneDir = renderDir + episode + "_" + scene
-   
-
-   animFilePath = animationDir + episode + "_" + scene + ".ma";
-   checkScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
-   renderScene = renderDir + episode + "_" + scene + "/" + episode + "_" + scene + ".ma";
-   animRefName = "episodes/" + episode + "/render/" + episode + "_" + scene + "/" + episode + "_" + scene + "_check_v01" + ".ma";
-
-   # create render directory
-   #cmds.sysFile( renderSceneDir, makeDir=True )# Windows
-   # copy check_v01
-   cmds.sysFile( animFilePath, copy=checkScene )# Windows
-   # copy RS
-   #cmds.sysFile( rsfilename, copy=renderScene )# Windows
-   # open renderScene
-   cmds.file(new=True, force=True, bls=True)
-   cmds.file( renderScene, open=True )
-
-
-   #ref
-   #cmds.file(animRefName, reference=True, mergeNamespacesOnClash=True, namespace='anim');
-
-
-result = cmds.promptDialog(
-		title='Update Render Scene KIDS',
-		message='Enter Name:',
-		button=['OK', 'Cancel'],
-		defaultButton='OK',
-		cancelButton='Cancel',
-		dismissString='Cancel')
-
-if result == 'OK':
-	text = cmds.promptDialog(query=True, text=True);
-	if len(text.split(' ')) > 1:
-	    updateRenderScene(text);
-	else:
-	    print "Wrong Scene Name";
+def export_statistics_to_XML(data, format, data_types):
+     #----------------------------------------------
+     # For commercial version only
+     #----------------------------------------------
+     pass

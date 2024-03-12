@@ -27,7 +27,7 @@ def check_camera_name():
      cameras = cmds.ls(type='camera')
      for camera_ in cameras:
           if cmds.getAttr(camera_+'.renderable'):
-               if camera_.startswith(name):
+               if name in camera_:
                     result = [1,'']
                else:
                     result = [0,camera_+" is an incorrect camera name. Please change the camera name to match the scene name."]

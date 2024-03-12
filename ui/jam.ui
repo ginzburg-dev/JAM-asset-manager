@@ -9,9 +9,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1109</width>
-    <height>592</height>
+    <width>1105</width>
+    <height>581</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1105</width>
+    <height>581</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1105</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -1810,7 +1828,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1109</width>
+     <width>1105</width>
      <height>24</height>
     </rect>
    </property>

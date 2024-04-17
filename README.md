@@ -2,6 +2,8 @@
 
 JAM Asset Manager is a comprehensive asset management tool designed to optimise the post-production process in animation production, lighting and rendering pipeline. Engineered with compatibility for Maya and Nuke (coming soon) software, it offers a robust solution for managing a wide range of assets including Light rigs, HDRI maps, Master Lights, and more. Beyond asset management, JAM enhances the workflow with render scene management and offers scalability across multiple projects.
 
+Showreel: https://www.youtube.com/watch?v=ntvdcg_zj6I&t=14s
+
 <img width="1110" alt="JAM_Asset_Manager" src="https://github.com/ginzburg-dev/JAM-asset-manager/assets/143356357/d4c7b994-8b63-48b2-a076-0ef36a24aa3c">
 
 ## Features

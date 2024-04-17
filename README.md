@@ -22,6 +22,3 @@ Watch showreel: https://www.youtube.com/watch?v=ntvdcg_zj6I&t=14s
 ### Scalability and Statistics
 - **Multi-project Support:** Adapts to multiple projects.
 - **Statistics:** Generates comprehensive statistics over individual or multiple projects for specified time periods.
-
-## License
-Specify the license under which JAM Asset Manager is distributed.

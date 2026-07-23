@@ -1,1 +1,19 @@
-/example
+__pycache__/
+*.py[cod]
+*.tmp
+*.jsontmp
+
+.DS_Store
+config.user.json
+ui/*.pyproject.user
+
+# Production content is configured externally and must not enter Git history.
+/asset_manager_ui/
+/example/
+*.exr
+*.hdr
+*.ma
+*.mb
+*.psd
+*.tex
+*.tx

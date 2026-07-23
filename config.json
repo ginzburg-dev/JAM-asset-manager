@@ -1,63 +1,58 @@
 {
-        "assetManagerName":"JAM Asset Manager",
-        "projects": [
-            {
-                "projectName": "Fixies5",
-                "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5",
-                "rsScene": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Fixies5/assets/RS/RS_Fixies5_v01.ma",
-                "episodePath":"scenes/episodes",
-                "assets": [
-                    {
-                        "assetType": "Master Lights",
-                        "assetTypePath": "assets/Master_Lights"
-                    },
-                    {
-                        "assetType": "Master Shots",
-                        "assetTypePath": "assets/Master_Shots"
-                    },
-                    {
-                        "assetType": "HDRI Library",
-                        "assetTypePath": "assets/HDRI"
-                    }
-                ]
-            },
-            {
-                "projectName": "Flo-Flo",
-                "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Flo-Flo",
-                "rsScene": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Flo-Flo/assets/RS/RS_Flo_Flo_v01.ma",
-                "episodePath":"scenes/episodes",
-                "assets": [
-                    {
-                        "assetType": "Master Lights",
-                        "assetTypePath": "assets/Master_Lights"
-                    }
-                ]
-            },
-            {
-                "projectName": "Kids",
-                "projectPath": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Kids",
-                "rsScene": "/Users/dmitryginzburg/Documents/Ginzburg/Github/JAM-asset-manager/example/Kids/assets/RS/RS_Kids_v01.ma",
-                "episodePath":"scenes/episodes",
-                "assets": [
-                    {
-                        "assetType": "Master Lights",
-                        "assetTypePath": "assets/Master_Lights"
-                    },
-                    {
-                        "assetType": "Master Shots",
-                        "assetTypePath": "assets/Master_Shots"
-                    }
-                ]
-            }
-        ],
-
-        "iconPlaceholder": "icon_placeholder.jpg",
-        "iconSize": 200,
-
-        "excludedNames": [".DS_Store"],
-        "allowedExtensions": ["hdr","ma"],
-
-        "currentProject": "Fixies5",
-        "currentAssetType": "Master Lights",
-        "currentEpisode": "ep257"
+  "assetManagerName": "JAM Asset Manager",
+  "projects": [
+    {
+      "projectName": "Fixies5",
+      "projectPath": "example/Fixies5",
+      "episodePath": "scenes/episodes",
+      "rsScene": "example/Fixies5/assets/RS/RS_Fixies5_v01.ma",
+      "assets": [
+        {
+          "assetType": "Master Lights",
+          "assetTypePath": "assets/Master_Lights"
+        },
+        {
+          "assetType": "Master Shots",
+          "assetTypePath": "assets/Master_Shots"
+        },
+        {
+          "assetType": "HDRI Library",
+          "assetTypePath": "assets/HDRI"
+        }
+      ]
+    },
+    {
+      "projectName": "Flo-Flo",
+      "projectPath": "example/Flo-Flo",
+      "episodePath": "scenes/episodes",
+      "rsScene": "example/Flo-Flo/assets/RS/RS_Flo_Flo_v01.ma",
+      "assets": [
+        {
+          "assetType": "Master Lights",
+          "assetTypePath": "assets/Master_Lights"
+        }
+      ]
+    },
+    {
+      "projectName": "Kids",
+      "projectPath": "example/Kids",
+      "episodePath": "scenes/episodes",
+      "rsScene": "example/Kids/assets/RS/RS_Kids_v01.ma",
+      "assets": [
+        {
+          "assetType": "Master Lights",
+          "assetTypePath": "assets/Master_Lights"
+        },
+        {
+          "assetType": "Master Shots",
+          "assetTypePath": "assets/Master_Shots"
+        }
+      ]
+    }
+  ],
+  "iconPlaceholder": "icon_placeholder.jpg",
+  "iconSize": 200,
+  "excludedNames": [".DS_Store"],
+  "allowedExtensions": ["hdr", "ma", "mb"],
+  "currentProject": "Fixies5"
 }

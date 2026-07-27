@@ -21,6 +21,7 @@ class ReleaseToolingTestCase(unittest.TestCase):
 
             prefix = "JAM-asset-manager-{}/".format(project_version())
             self.assertTrue(all(name.startswith(prefix) for name in names))
+            self.assertIn(prefix + "CHANGELOG.md", names)
             self.assertIn(prefix + "JAM.mod", names)
             self.assertIn(prefix + "Makefile", names)
             self.assertIn(prefix + "config.example.json", names)

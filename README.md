@@ -239,7 +239,8 @@ git push origin v0.1.0
 The workflow rejects tags that do not match the package and Maya-module versions.
 Release notes are generated from merged pull requests and their labels.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development conventions and
+See [CHANGELOG.md](CHANGELOG.md) for version history,
+[CONTRIBUTING.md](CONTRIBUTING.md) for development conventions, and
 [SECURITY.md](SECURITY.md) for private vulnerability reporting.
 
 ## License

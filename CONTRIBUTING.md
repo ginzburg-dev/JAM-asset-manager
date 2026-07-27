@@ -40,7 +40,9 @@ Keep unrelated changes in separate commits.
 
 ## Releases
 
-Maintainers create releases from annotated semantic-version tags. The version in
-`src/jam_asset_manager/__init__.py` and `JAM.mod` must match the tag without its
-leading `v`. Pushing the tag starts the release workflow; contributors should not
-change the version unless the change is intended for a release.
+Maintainers create releases from semantic-version tags. Before tagging, move the
+relevant entries from `Unreleased` into a dated section in `CHANGELOG.md`. The
+version in `src/jam_asset_manager/__init__.py` and `JAM.mod` must match the tag
+without its leading `v`. Pushing the tag starts the release workflow;
+contributors should not change the version unless the change is intended for a
+release.

@@ -12,6 +12,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_ROOT = REPOSITORY_ROOT / "src" / "jam_asset_manager"
 PROJECT_NAME = "JAM-asset-manager"
 ROOT_FILES = (
+    REPOSITORY_ROOT / "CHANGELOG.md",
     REPOSITORY_ROOT / "JAM.mod",
     REPOSITORY_ROOT / "LICENSE",
     REPOSITORY_ROOT / "Makefile",

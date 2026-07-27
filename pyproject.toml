@@ -22,7 +22,7 @@ classifiers = [
 Homepage = "https://github.com/ginzburg-dev/JAM-asset-manager"
 Repository = "https://github.com/ginzburg-dev/JAM-asset-manager"
 Issues = "https://github.com/ginzburg-dev/JAM-asset-manager/issues"
-Changelog = "https://github.com/ginzburg-dev/JAM-asset-manager/releases"
+Changelog = "https://github.com/ginzburg-dev/JAM-asset-manager/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = ["build>=1,<2", "ruff>=0.8,<1"]

@@ -1,0 +1,3 @@
++ JAM 0.1.0 .
+PYTHONPATH +:= src
+JAM_ASSET_MANAGER_PATH:=.

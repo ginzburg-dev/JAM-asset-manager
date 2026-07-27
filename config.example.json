@@ -1,0 +1,36 @@
+{
+  "assetManagerName": "JAM Asset Manager",
+  "currentProject": "Demo",
+  "projects": [
+    {
+      "projectName": "Demo",
+      "projectPath": "projects/demo",
+      "episodePath": "scenes/episodes",
+      "rsScene": "projects/demo/assets/render_templates/render_scene.ma",
+      "assets": [
+        {
+          "assetType": "Models",
+          "assetTypePath": "assets/models"
+        },
+        {
+          "assetType": "Textures",
+          "assetTypePath": "assets/textures"
+        },
+        {
+          "assetType": "HDRI",
+          "assetTypePath": "assets/hdri"
+        }
+      ]
+    }
+  ],
+  "iconPlaceholder": "icon_placeholder.jpg",
+  "iconSize": 200,
+  "excludedNames": [
+    ".DS_Store"
+  ],
+  "allowedExtensions": [
+    "hdr",
+    "ma",
+    "mb"
+  ]
+}

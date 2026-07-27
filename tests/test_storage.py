@@ -2,7 +2,7 @@
 
 from unittest.mock import patch
 
-from jam_asset_manager.core.storage import read_json, write_json
+from jam_asset_manager.core.storage import read_json, update_json, write_json
 from tests.support import TemporaryProjectTestCase
 
 
@@ -27,3 +27,14 @@ class StorageTestCase(TemporaryProjectTestCase):
             with self.assertRaisesRegex(OSError, "disk error"):
                 write_json(path, {"name": "JAM"})
         self.assertFalse((self.root / "data.json.tmp").exists())
+
+    def test_update_json_cleans_up_its_lock(self):
+        path = self.root / "data.json"
+        result = update_json(
+            path,
+            lambda data: {"count": data.get("count", 0) + 1},
+            default={},
+        )
+        self.assertEqual(result, {"count": 1})
+        self.assertEqual(read_json(path), {"count": 1})
+        self.assertFalse((self.root / "data.json.lock").exists())

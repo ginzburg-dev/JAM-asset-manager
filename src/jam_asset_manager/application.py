@@ -1,10 +1,9 @@
 """Maya application entry point."""
 
 from maya import OpenMayaUI as omui
-from PySide2.QtWidgets import QWidget
-from shiboken2 import wrapInstance
 
 from .ui.main_window import MainWindow
+from .ui.qt import QWidget, wrapInstance
 
 
 def run(config=None):

@@ -135,6 +135,32 @@ class MayaSceneTestCase(unittest.TestCase):
                 ]
             )
 
+    def test_create_render_scene_never_overwrites_existing_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            animation = root / "animation.ma"
+            template = root / "template.ma"
+            render = root / "render" / "shot.ma"
+            render.parent.mkdir()
+            animation.write_text("animation", encoding="utf-8")
+            template.write_text("template", encoding="utf-8")
+            render.write_text("existing render", encoding="utf-8")
+
+            self.assertFalse(
+                maya_scenes.create_render_scene(
+                    "shot",
+                    str(animation),
+                    str(render),
+                    str(template),
+                )
+            )
+
+            self.assertEqual(render.read_text(encoding="utf-8"), "existing render")
+            self.cmds.warning.assert_called_once_with(
+                "Render-scene output already exists: {}".format(render)
+            )
+            self.cmds.file.assert_not_called()
+
     def test_open_render_scene_rejects_missing_file(self):
         self.assertFalse(maya_scenes.open_render_scene("missing.ma"))
         self.cmds.file.assert_not_called()

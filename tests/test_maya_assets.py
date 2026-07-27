@@ -41,6 +41,14 @@ class MayaAssetTestCase(unittest.TestCase):
             ra=True,
         )
 
+    def test_check_asset_displays_success(self):
+        self.assertTrue(maya_assets.check_asset())
+        self.cmds.confirmDialog.assert_called_once_with(
+            title="Asset check complete",
+            message="No asset problems were found.",
+            button=["OK"],
+        )
+
     def test_publish_asset_requires_a_saved_scene(self):
         self.cmds.file.return_value = ""
         self.assertFalse(maya_assets.publish_asset())

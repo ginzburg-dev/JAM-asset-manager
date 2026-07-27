@@ -91,6 +91,15 @@ def _checked_animation_path(name, render_filename):
 
 def create_render_scene(name, anim_filename, render_filename, rs_filename):
     """Create a render scene from the configured template and animation scene."""
+    animation_copy = _checked_animation_path(name, render_filename)
+    existing_output = next(
+        (path for path in (render_filename, animation_copy) if os.path.exists(path)),
+        None,
+    )
+    if existing_output is not None:
+        cmds.warning("Render-scene output already exists: {}".format(existing_output))
+        return False
+
     if not _save_changes_before_opening():
         return False
 
@@ -100,7 +109,6 @@ def create_render_scene(name, anim_filename, render_filename, rs_filename):
         return False
 
     os.makedirs(os.path.dirname(render_filename), exist_ok=True)
-    animation_copy = _checked_animation_path(name, render_filename)
     shutil.copy2(anim_filename, animation_copy)
     shutil.copy2(rs_filename, render_filename)
 

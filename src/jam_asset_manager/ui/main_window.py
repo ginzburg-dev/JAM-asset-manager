@@ -4,18 +4,6 @@ import logging
 import os
 from typing import NamedTuple
 
-from PySide2.QtCore import QRect, QSize, Qt
-from PySide2.QtGui import QColor, QIcon, QPixmap
-from PySide2.QtWidgets import (
-    QAbstractItemView,
-    QApplication,
-    QListWidgetItem,
-    QMainWindow,
-    QTableWidgetItem,
-    QTreeWidgetItem,
-    QWidget,
-)
-
 from ..core.catalog import (
     AssetRecord,
     SceneRecord,
@@ -31,6 +19,23 @@ from ..core.reports import append_message, read_messages, render_history
 from ..maya import assets as maya_assets
 from ..maya import scenes as maya_scenes
 from .generated.main_window import Ui_MainWindow
+from .qt import (
+    ASCENDING_ORDER,
+    MATCH_EXACTLY,
+    POSITION_AT_TOP,
+    QApplication,
+    QColor,
+    QIcon,
+    QListWidgetItem,
+    QMainWindow,
+    QPixmap,
+    QRect,
+    QSize,
+    Qt,
+    QTableWidgetItem,
+    QTreeWidgetItem,
+    QWidget,
+)
 from .report_dialog import ReportDialog
 
 LOGGER = logging.getLogger(__name__)
@@ -92,7 +97,11 @@ def load_project_structure(
         return
     for element in sorted(os.listdir(startpath)):
         path_info = os.path.join(startpath, element)
-        if element not in excluded_names and os.path.isdir(path_info):
+        if (
+            element not in excluded_names
+            and os.path.isdir(path_info)
+            and not os.path.islink(path_info)
+        ):
             parent_itm = QTreeWidgetItem(tree, [os.path.basename(element)])
             parent_itm.setData(0, Qt.UserRole, path_info)
             load_project_structure(path_info, parent_itm, excluded_names, icons_path)
@@ -209,14 +218,12 @@ class MainWindow(QMainWindow):
         target_stem = os.path.normcase(os.path.join(dir_path, element_name))
         if self.is_asset_directory(dir_path):
             self.ui.tabWidget.setCurrentWidget(self.ui.tabWidget.findChild(QWidget, "tab"))
-            found_items = self.ui.listWidget_assets.findItems(
-                element_name, Qt.MatchFlag.MatchExactly
-            )
+            found_items = self.ui.listWidget_assets.findItems(element_name, MATCH_EXACTLY)
             for item in found_items:
                 item_path = item.data(Qt.UserRole).path
                 if os.path.normcase(os.path.splitext(item_path)[0]) == target_stem:
                     self.ui.listWidget_assets.setCurrentItem(item)
-                    self.ui.listWidget_assets.scrollToItem(item, QAbstractItemView.PositionAtTop)
+                    self.ui.listWidget_assets.scrollToItem(item, POSITION_AT_TOP)
                     return
             if os.path.isdir(dir_path):
                 for filename in sorted(os.listdir(dir_path)):
@@ -236,9 +243,7 @@ class MainWindow(QMainWindow):
                 data = item.data(Qt.UserRole) if item is not None else None
                 if data and os.path.normcase(os.path.splitext(data.render_path)[0]) == target_stem:
                     self.ui.tableWidget_scenesTable.selectRow(row)
-                    self.ui.tableWidget_scenesTable.scrollToItem(
-                        item, QAbstractItemView.PositionAtTop
-                    )
+                    self.ui.tableWidget_scenesTable.scrollToItem(item, POSITION_AT_TOP)
                     return
             self.ui.tableWidget_scenesTable.clearContents()
             self.ui.tableWidget_scenesTable.setRowCount(1)
@@ -260,9 +265,7 @@ class MainWindow(QMainWindow):
         return self.config.user_state.project(self.ui.comboBox_projName.currentText()).episode
 
     def restore_episode_selection(self):
-        matches = self.ui.listWidget_episodes.findItems(
-            self.get_current_episode(), Qt.MatchFlag.MatchExactly
-        )
+        matches = self.ui.listWidget_episodes.findItems(self.get_current_episode(), MATCH_EXACTLY)
         if matches:
             self.ui.listWidget_episodes.setCurrentItem(matches[0])
 
@@ -340,7 +343,7 @@ class MainWindow(QMainWindow):
             self.ui.tableWidget_scenesTable.setItem(row, 1, new_item_scene)
             self.ui.tableWidget_scenesTable.setItem(row, 2, new_item_note)
 
-        self.ui.tableWidget_scenesTable.sortByColumn(1, Qt.SortOrder.AscendingOrder)
+        self.ui.tableWidget_scenesTable.sortByColumn(1, ASCENDING_ORDER)
 
     def create_scene_item(self, name_am_path):
         parts = [part for part in name_am_path.split("|") if part]
@@ -461,7 +464,13 @@ class MainWindow(QMainWindow):
         LOGGER.info("Denoising is unavailable in the community edition")
 
     def check_element(self):
-        maya_scenes.check_scene()
+        path = maya_scenes.get_current_scene_path()
+        if self.is_scene_path(path):
+            return maya_scenes.check_scene()
+        if self.is_asset_path(path):
+            return maya_assets.check_asset()
+        LOGGER.warning("The current Maya scene is outside the configured JAM project paths")
+        return False
 
     def refresh_assets(self):
         self.ui.comboBox_aTypes.clear()

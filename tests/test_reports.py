@@ -1,5 +1,6 @@
 """Tests for report metadata and safe HTML rendering."""
 
+import threading
 from datetime import datetime
 
 from jam_asset_manager.core.reports import (
@@ -58,3 +59,25 @@ class ReportsTestCase(TemporaryProjectTestCase):
         self.assertIn("line one<br>line two", rendered)
         self.assertNotIn("99h", rendered)
         self.assertEqual(new_metadata()["messages"], [])
+
+    def test_concurrent_messages_are_not_lost(self):
+        asset_path = self.root / "asset.ma"
+        threads = [
+            threading.Thread(
+                target=append_message,
+                args=(asset_path, "asset", "note", "message {}".format(index)),
+                kwargs={"user": "artist"},
+            )
+            for index in range(12)
+        ]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+
+        messages = read_messages(asset_path)
+        self.assertEqual(len(messages), len(threads))
+        self.assertEqual(
+            {message["message"] for message in messages},
+            {"message {}".format(index) for index in range(len(threads))},
+        )

@@ -8,18 +8,16 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide2.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QLabel,
-    QLayout, QLineEdit, QMainWindow, QMenuBar,
-    QPushButton, QSizePolicy, QSpacerItem, QSpinBox,
-    QStatusBar, QTextEdit, QTreeWidget, QTreeWidgetItem,
-    QVBoxLayout, QWidget)
+from ..qt import (
+    QApplication, QBrush, QColor, QConicalGradient, QCoreApplication, QCursor,
+    QDate, QDateTime, QFont, QFontDatabase, QGradient, QHBoxLayout,
+    QHeaderView, QIcon, QImage, QKeySequence, QLabel, QLayout, QLineEdit,
+    QLinearGradient, QLocale, QMainWindow, QMenuBar, QMetaObject, QObject,
+    QPainter, QPalette, QPixmap, QPoint, QPushButton, QRadialGradient, QRect,
+    QSize, QSizePolicy, QSizePolicyPolicy, QSpacerItem, QSpinBox, QStatusBar,
+    QTextEdit, QTime, QTransform, QTreeWidget, QTreeWidgetItem, QUrl,
+    QVBoxLayout, QWidget, Qt,
+)
 
 class Ui_ReportDialog(object):
     def setupUi(self, report_dialog):
@@ -68,7 +66,7 @@ class Ui_ReportDialog(object):
 
         self.treeWidget = QTreeWidget(self.verticalLayoutWidget)
         self.treeWidget.setObjectName(u"treeWidget")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.treeWidget.sizePolicy().hasHeightForWidth())
@@ -91,7 +89,7 @@ class Ui_ReportDialog(object):
 
         self.horizontalLayout.addWidget(self.spinBox_hours)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 

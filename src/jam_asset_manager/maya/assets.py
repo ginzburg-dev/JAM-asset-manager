@@ -36,6 +36,20 @@ def asset_check_message():
     return [0, "\n\n".join(failures)] if failures else [1, ""]
 
 
+def check_asset():
+    """Run all asset checks and display their aggregate result."""
+    result, message = asset_check_message()
+    if result:
+        cmds.confirmDialog(
+            title="Asset check complete",
+            message="No asset problems were found.",
+            button=["OK"],
+        )
+    else:
+        cmds.confirmDialog(title="Asset check failed", message=message, button=["OK"])
+    return bool(result)
+
+
 def publish_asset():
     """Validate and save the current Maya asset."""
     scene_path = cmds.file(query=True, sceneName=True)

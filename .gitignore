@@ -2,6 +2,7 @@ __pycache__/
 *.py[cod]
 *.tmp
 *.jsontmp
+*.lock
 .coverage
 .coverage.*
 htmlcov/

@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .constants import ASSET_METADATA_TEMPLATE, REPORT_STYLES
-from .storage import read_json, write_json
+from .storage import read_json, update_json
 
 
 def metadata_path(path):
@@ -25,23 +25,27 @@ def new_metadata():
 def append_message(path, asset_name, message_type, message, hours=0, user=None, now=None):
     """Append a note or report entry to an asset's sidecar metadata file."""
     sidecar_path = metadata_path(path)
-    data = read_json(sidecar_path) or new_metadata()
-    messages = data.setdefault("messages", [])
     created_time = (now or datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
-    data["assetName"] = asset_name
-    data["assetType"] = Path(path).suffix.lower().lstrip(".")
-    data["createdTime"] = data.get("createdTime") or created_time
-    messages.append(
-        {
-            "type": message_type,
-            "message": message,
-            "user": user or getpass.getuser(),
-            "createdTime": created_time,
-            "hours": hours,
-        }
-    )
-    write_json(sidecar_path, data)
-    return data
+    message_user = user or getpass.getuser()
+
+    def add_message(data):
+        data = data or new_metadata()
+        messages = data.setdefault("messages", [])
+        data["assetName"] = asset_name
+        data["assetType"] = Path(path).suffix.lower().lstrip(".")
+        data["createdTime"] = data.get("createdTime") or created_time
+        messages.append(
+            {
+                "type": message_type,
+                "message": message,
+                "user": message_user,
+                "createdTime": created_time,
+                "hours": hours,
+            }
+        )
+        return data
+
+    return update_json(sidecar_path, add_message, default={})
 
 
 def read_messages(path):

@@ -9,7 +9,12 @@ from pathlib import Path
 from jam_asset_manager.core.storage import write_json
 
 
-class Placeholder:
+class PlaceholderMeta(type):
+    def __getattr__(cls, _name):
+        return cls
+
+
+class Placeholder(metaclass=PlaceholderMeta):
     """Import-compatible stand-in for Qt classes used only at runtime."""
 
 

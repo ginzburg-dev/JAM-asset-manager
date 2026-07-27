@@ -8,22 +8,18 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide2.QtWidgets import (QAction, QAbstractItemView, QAbstractScrollArea, QApplication, QComboBox,
-    QFrame, QHBoxLayout, QHeaderView, QLabel,
-    QLayout, QLineEdit, QListView, QListWidget,
-    QListWidgetItem, QMainWindow, QMenu, QMenuBar,
-    QSizePolicy, QSpacerItem, QSplitter, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QTextBrowser,
-    QToolButton, QTreeWidget, QTreeWidgetItem, QVBoxLayout,
-    QWidget)
+from ..qt import (
+    QAction, QAbstractItemView, QAbstractScrollArea, QApplication, QBrush,
+    QColor, QComboBox, QConicalGradient, QCoreApplication, QCursor, QDate,
+    QDateTime, QFont, QFontDatabase, QFrame, QGradient, QHBoxLayout,
+    QHeaderView, QIcon, QImage, QKeySequence, QLabel, QLayout, QLineEdit,
+    QLinearGradient, QListView, QListWidget, QListWidgetItem, QLocale,
+    QMainWindow, QMenu, QMenuBar, QMetaObject, QObject, QPainter, QPalette,
+    QPixmap, QPoint, QRadialGradient, QRect, QSize, QSizePolicy,
+    QSizePolicyPolicy, QSpacerItem, QSplitter, QStatusBar, QTabWidget,
+    QTableWidget, QTableWidgetItem, QTextBrowser, QTime, QToolButton,
+    QTransform, QTreeWidget, QTreeWidgetItem, QUrl, QVBoxLayout, QWidget, Qt,
+)
 
 class Ui_MainWindow(object):
     def setupUi(self, main_window):
@@ -31,7 +27,7 @@ class Ui_MainWindow(object):
             main_window.setObjectName(u"MainWindow")
         main_window.setWindowModality(Qt.NonModal)
         main_window.resize(1105, 581)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicyPolicy.Fixed, QSizePolicyPolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(main_window.sizePolicy().hasHeightForWidth())
@@ -134,7 +130,7 @@ class Ui_MainWindow(object):
 
         self.toolButton_import = QToolButton(self.verticalLayoutWidget_3)
         self.toolButton_import.setObjectName(u"toolButton_import")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
+        sizePolicy1 = QSizePolicy(QSizePolicyPolicy.Maximum, QSizePolicyPolicy.Maximum)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.toolButton_import.sizePolicy().hasHeightForWidth())
@@ -228,7 +224,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.toolButton_statistics)
 
-        self.horizontalSpacer_mainPanel = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_mainPanel = QSpacerItem(40, 20, QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_mainPanel)
 
@@ -296,7 +292,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.comboBox_projName)
 
-        self.horizontalSpacer_projName = QSpacerItem(600, 10, QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_projName = QSpacerItem(600, 10, QSizePolicyPolicy.Preferred, QSizePolicyPolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer_projName)
 
@@ -331,7 +327,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.setContentsMargins(5, 0, 0, 0)
         self.lineEdit_filter = QLineEdit(self.verticalLayoutWidget_2)
         self.lineEdit_filter.setObjectName(u"lineEdit_filter")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy2 = QSizePolicy(QSizePolicyPolicy.Preferred, QSizePolicyPolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.lineEdit_filter.sizePolicy().hasHeightForWidth())
@@ -377,7 +373,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7.addWidget(self.toolButton_aPublish)
 
-        self.horizontalSpacer_4 = QSpacerItem(100, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_4 = QSpacerItem(100, 20, QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_4)
 
@@ -402,7 +398,7 @@ class Ui_MainWindow(object):
 
         self.splitter_2 = QSplitter(self.verticalLayoutWidget_2)
         self.splitter_2.setObjectName(u"splitter_2")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        sizePolicy3 = QSizePolicy(QSizePolicyPolicy.Preferred, QSizePolicyPolicy.Expanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.splitter_2.sizePolicy().hasHeightForWidth())
@@ -464,7 +460,7 @@ class Ui_MainWindow(object):
         QTreeWidgetItem(__qtreewidgetitem6)
         QTreeWidgetItem(self.treeWidget_assetFolders)
         self.treeWidget_assetFolders.setObjectName(u"treeWidget_assetFolders")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy4 = QSizePolicy(QSizePolicyPolicy.Preferred, QSizePolicyPolicy.Preferred)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.treeWidget_assetFolders.sizePolicy().hasHeightForWidth())
@@ -490,7 +486,7 @@ class Ui_MainWindow(object):
         self.splitter_2.addWidget(self.layoutWidget)
         self.listWidget_assets = QListWidget(self.splitter_2)
         self.listWidget_assets.setObjectName(u"listWidget_assets")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy5 = QSizePolicy(QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Expanding)
         sizePolicy5.setHorizontalStretch(2)
         sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.listWidget_assets.sizePolicy().hasHeightForWidth())
@@ -574,7 +570,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6.addWidget(self.toolButton_sPublish)
 
-        self.horizontalSpacer_3 = QSpacerItem(100, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_3 = QSpacerItem(100, 20, QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Minimum)
 
         self.horizontalLayout_6.addItem(self.horizontalSpacer_3)
 
@@ -599,7 +595,7 @@ class Ui_MainWindow(object):
         QListWidgetItem(self.listWidget_episodes)
         QListWidgetItem(self.listWidget_episodes)
         self.listWidget_episodes.setObjectName(u"listWidget_episodes")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
+        sizePolicy6 = QSizePolicy(QSizePolicyPolicy.Fixed, QSizePolicyPolicy.Expanding)
         sizePolicy6.setHorizontalStretch(0)
         sizePolicy6.setVerticalStretch(0)
         sizePolicy6.setHeightForWidth(self.listWidget_episodes.sizePolicy().hasHeightForWidth())
@@ -713,7 +709,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setSpacing(20)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.verticalSpacer = QSpacerItem(20, 70, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.verticalSpacer = QSpacerItem(20, 70, QSizePolicyPolicy.Minimum, QSizePolicyPolicy.Fixed)
 
         self.horizontalLayout_11.addItem(self.verticalSpacer)
 
@@ -751,7 +747,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_9.addWidget(self.toolButton_addNote)
 
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Minimum)
 
         self.horizontalLayout_9.addItem(self.horizontalSpacer_5)
 
@@ -765,7 +761,7 @@ class Ui_MainWindow(object):
         self.splitter.setOrientation(Qt.Vertical)
         self.textBrowser_history = QTextBrowser(self.splitter)
         self.textBrowser_history.setObjectName(u"textBrowser_history")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy7 = QSizePolicy(QSizePolicyPolicy.Expanding, QSizePolicyPolicy.Expanding)
         sizePolicy7.setHorizontalStretch(0)
         sizePolicy7.setVerticalStretch(0)
         sizePolicy7.setHeightForWidth(self.textBrowser_history.sizePolicy().hasHeightForWidth())

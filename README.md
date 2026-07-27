@@ -232,7 +232,7 @@ Before tagging, update the matching version in
 make check
 make build
 make release
-git tag -a v0.1.0 -m "JAM Asset Manager 0.1.0"
+git tag v0.1.0
 git push origin v0.1.0
 ```
 

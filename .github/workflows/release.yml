@@ -67,5 +67,5 @@ jobs:
           gh release create "${GITHUB_REF_NAME}"
           dist/release/*
           --generate-notes
-          --title "JAM Asset Manager ${GITHUB_REF_NAME#v}"
+          --title "${GITHUB_REF_NAME}"
           --verify-tag

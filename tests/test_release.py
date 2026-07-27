@@ -4,9 +4,12 @@ import hashlib
 import tempfile
 import unittest
 import zipfile
+from pathlib import Path
 
 from scripts.build_release import build_archive, project_version, validate_version
 from scripts.generate_ui import normalize_generated_source
+
+REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 
 
 class ReleaseToolingTestCase(unittest.TestCase):
@@ -35,6 +38,12 @@ class ReleaseToolingTestCase(unittest.TestCase):
     def test_release_rejects_a_mismatched_tag(self):
         with self.assertRaisesRegex(RuntimeError, "does not match"):
             validate_version("v9.9.9")
+
+    def test_release_title_matches_the_version_tag(self):
+        workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('--title "${GITHUB_REF_NAME}"', workflow)
 
     def test_generated_ui_imports_are_normalized(self):
         source = """from PySide6.QtCore import (Qt, QSize)

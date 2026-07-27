@@ -17,6 +17,13 @@ EXCLUDED_DIRECTORIES = {
     "dist",
 }
 REQUIRED_PACKAGE_DIRECTORIES = {"core", "maya", "resources", "ui"}
+REQUIRED_PUBLIC_FILES = {
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md",
+    "pyproject.toml",
+}
 
 
 def is_source_file(path):
@@ -41,6 +48,13 @@ class RepositoryTestCase(unittest.TestCase):
             REQUIRED_PACKAGE_DIRECTORIES,
             {path.name for path in package_root.iterdir() if path.is_dir()} - {"__pycache__"},
         )
+        self.assertTrue(
+            REQUIRED_PUBLIC_FILES.issubset(
+                {path.name for path in REPOSITORY_ROOT.iterdir() if path.is_file()}
+            )
+        )
+        self.assertTrue((REPOSITORY_ROOT / ".github" / "workflows" / "ci.yml").is_file())
+        self.assertTrue((REPOSITORY_ROOT / ".github" / "workflows" / "release.yml").is_file())
 
     def test_every_icon_is_referenced_and_every_reference_exists(self):
         reference_files = (
@@ -69,6 +83,17 @@ class RepositoryTestCase(unittest.TestCase):
             SIZE_BUDGET_BYTES,
             "Source checkout exceeded the 2 MiB budget; keep production assets external.",
         )
+
+    def test_qt_imports_are_centralized(self):
+        package_root = REPOSITORY_ROOT / "src" / "jam_asset_manager"
+        direct_binding_imports = []
+        for path in package_root.rglob("*.py"):
+            if path.name == "qt.py":
+                continue
+            source = path.read_text(encoding="utf-8")
+            if "from PySide2" in source or "from PySide6" in source:
+                direct_binding_imports.append(path.relative_to(REPOSITORY_ROOT))
+        self.assertEqual(direct_binding_imports, [])
 
 
 if __name__ == "__main__":

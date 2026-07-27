@@ -2,7 +2,7 @@ PYTHON ?= python3
 RUFF ?= ruff
 MAYAPY ?= mayapy
 
-.PHONY: help setup init-config install lint format test check build
+.PHONY: help setup init-config install lint format test compile check build release ui
 
 help:
 	@echo "Available targets:"
@@ -12,8 +12,11 @@ help:
 	@echo "  lint         Run Ruff lint and formatting checks"
 	@echo "  format       Format source code and tests"
 	@echo "  test         Run the unit test suite"
-	@echo "  check        Run lint and tests"
-	@echo "  build        Build the wheel package"
+	@echo "  compile      Compile source and tests"
+	@echo "  check        Run all local quality checks"
+	@echo "  build        Build wheel and source distributions"
+	@echo "  release      Build the versioned Maya release archive"
+	@echo "  ui           Regenerate Qt forms with PySide compatibility"
 
 setup: init-config
 	@echo "Add this directory to MAYA_MODULE_PATH in Maya.env:"
@@ -31,17 +34,27 @@ install:
 	$(MAYAPY) -m pip install --editable .
 
 lint:
-	$(RUFF) check --no-cache src tests
-	$(RUFF) format --check --no-cache src tests
+	$(RUFF) check --no-cache src tests scripts
+	$(RUFF) format --check --no-cache src tests scripts
 
 format:
-	$(RUFF) format src tests
+	$(RUFF) format src tests scripts
 
 test:
 	PYTHONPYCACHEPREFIX=/tmp/jam-asset-manager-pycache PYTHONPATH=src \
 		$(PYTHON) -m unittest discover -s tests -v
 
-check: lint test
+compile:
+	PYTHONPYCACHEPREFIX=/tmp/jam-asset-manager-pycache \
+		$(PYTHON) -m compileall -q src tests scripts
+
+check: lint test compile
 
 build:
-	uv build
+	$(PYTHON) -m build
+
+release:
+	$(PYTHON) scripts/build_release.py
+
+ui:
+	$(PYTHON) scripts/generate_ui.py

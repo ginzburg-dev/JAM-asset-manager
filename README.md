@@ -1,5 +1,9 @@
 # JAM Asset Manager
 
+[![CI](https://github.com/ginzburg-dev/JAM-asset-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/ginzburg-dev/JAM-asset-manager/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/ginzburg-dev/JAM-asset-manager)](https://github.com/ginzburg-dev/JAM-asset-manager/releases/latest)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+
 JAM Asset Manager is a Maya-integrated browser for production assets and render
 scenes. It provides one place to navigate project libraries, create or update
 render scenes, import assets, validate scenes, publish work, and record production
@@ -22,11 +26,11 @@ notes.
 ## Requirements
 
 - Autodesk Maya running Python 3
-- PySide2 and shiboken2 (included with supported Maya installations)
+- PySide2/shiboken2 or PySide6/shiboken6, depending on the Maya version
 - RenderMan for Maya only when using the optional `maya.denoising` adapter
 
 The application is intended to run inside Maya; it is not a standalone Qt
-program.
+program. The Qt adapter supports both Maya's Qt 5 and Qt 6 Python bindings.
 
 ## Installation
 
@@ -174,9 +178,10 @@ src/jam_asset_manager/
 ├── resources/icons/         Runtime image assets
 └── ui/
     ├── main_window.py       Qt event handlers and presentation logic
+    ├── qt.py                PySide2/PySide6 compatibility imports
     ├── report_dialog.py
     ├── forms/               Editable Qt Designer sources
-    └── generated/           Generated PySide2 modules
+    └── generated/           Generated Qt form modules
 tests/                       Unit tests mirroring source modules
 ```
 
@@ -190,7 +195,8 @@ API later if a concrete network workflow is required.
 
 The Qt classes under `src/jam_asset_manager/ui/generated/` are generated from the
 corresponding files under `src/jam_asset_manager/ui/forms/`. Edit the `.ui`
-sources and regenerate the Python modules instead of hand-editing generated code.
+sources and run `make ui`; the generation script normalizes binding-specific
+imports through the Qt compatibility module.
 
 Install the development tools into an isolated environment with
 `python3 -m pip install -e ".[dev]"`.
@@ -198,13 +204,12 @@ Install the development tools into an isolated environment with
 Run the local quality checks from the repository root:
 
 ```bash
-ruff check .
-ruff format --check .
-PYTHONPATH=src python3 -m unittest discover -s tests -v
-PYTHONPYCACHEPREFIX=/tmp/jam-pycache python3 -m compileall -q src tests
+make check
+make build
+make release
 ```
 
-The test suite uses Python's standard `unittest` framework. Maya, PySide2, and
+The test suite uses Python's standard `unittest` framework. Maya, PySide, and
 RenderMan are replaced by controlled test doubles, so configuration, filesystem,
 publishing, scene-management, denoising, and UI dependency-injection behavior can
 be verified outside Maya and in CI.
@@ -212,6 +217,30 @@ be verified outside Maya and in CI.
 The community edition exposes placeholders for commercial statistics features.
 The denoising module is retained for compatible legacy RenderMan pipelines and
 may require site-specific commands and executable paths.
+
+## Releases
+
+CI runs the test suite against Python versions representing supported Maya
+generations, then checks formatting and packaging. A tag such as `v0.1.0`
+automatically creates a GitHub Release containing a compact, versioned Maya-module
+ZIP and its SHA-256 checksum.
+
+Before tagging, update the matching version in
+`src/jam_asset_manager/__init__.py` and `JAM.mod`, then run:
+
+```bash
+make check
+make build
+make release
+git tag -a v0.1.0 -m "JAM Asset Manager 0.1.0"
+git push origin v0.1.0
+```
+
+The workflow rejects tags that do not match the package and Maya-module versions.
+Release notes are generated from merged pull requests and their labels.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development conventions and
+[SECURITY.md](SECURITY.md) for private vulnerability reporting.
 
 ## License
 

@@ -13,6 +13,10 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 
 
 class ReleaseToolingTestCase(unittest.TestCase):
+    def test_project_version_comes_from_pyproject(self):
+        pyproject = (REPOSITORY_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('version = "{}"'.format(project_version()), pyproject)
+
     def test_release_archive_contains_only_versioned_runtime_content(self):
         with tempfile.TemporaryDirectory() as directory:
             archive_path, checksum_path = build_archive(directory, "v" + project_version())

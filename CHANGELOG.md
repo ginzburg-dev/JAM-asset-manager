@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+### Changed
+
+- Project versions are declared explicitly in `pyproject.toml` and validated
+  against the required Maya module version in `JAM.mod`.
+
 ## [0.1.0] - 2026-07-28
 
 ### Added

@@ -3,7 +3,6 @@
 from .core import BaseConfig, JamConfig
 
 __all__ = ["BaseConfig", "JamConfig", "run"]
-__version__ = "0.1.0"
 
 
 def run(config=None):

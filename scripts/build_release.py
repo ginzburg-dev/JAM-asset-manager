@@ -25,22 +25,22 @@ ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
 
 def project_version():
-    """Read ``__version__`` without importing Maya-dependent modules."""
-    module_path = PACKAGE_ROOT / "__init__.py"
-    module = ast.parse(module_path.read_text(encoding="utf-8"), filename=str(module_path))
-    for node in module.body:
-        if not isinstance(node, ast.Assign):
+    """Read the static project version without requiring a TOML dependency."""
+    pyproject_path = REPOSITORY_ROOT / "pyproject.toml"
+    section = None
+    for source_line in pyproject_path.read_text(encoding="utf-8").splitlines():
+        line = source_line.strip()
+        if line.startswith("[") and line.endswith("]"):
+            section = line[1:-1].strip()
             continue
-        if not any(
-            isinstance(target, ast.Name) and target.id == "__version__" for target in node.targets
-        ):
+        if section != "project" or not line.startswith("version"):
             continue
-        if isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
-            return node.value.value
-        string_node = getattr(ast, "Str", None)
-        if string_node is not None and isinstance(node.value, string_node):
-            return node.value.s
-    raise RuntimeError("Could not find __version__ in {}".format(module_path))
+        key, separator, raw_value = line.partition("=")
+        if separator and key.strip() == "version":
+            version = ast.literal_eval(raw_value.strip())
+            if isinstance(version, str):
+                return version
+    raise RuntimeError("Could not find [project].version in {}".format(pyproject_path))
 
 
 def module_version():

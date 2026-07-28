@@ -6,6 +6,9 @@ import shutil
 
 import maya.cmds as cmds
 
+from ..core.publishing import publish_lock, record_publish
+from .dependencies import collect_dependencies
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -170,15 +173,44 @@ def publish_scene():
         return False
 
     try:
-        cmds.file(save=True)
-    except RuntimeError:
-        LOGGER.exception("Maya could not publish scene %s", scene_path)
-        cmds.warning("The scene could not be published. See the Script Editor for details.")
+        with publish_lock(scene_path):
+            try:
+                cmds.file(save=True)
+            except RuntimeError:
+                LOGGER.exception("Maya could not publish scene %s", scene_path)
+                cmds.warning("The scene could not be published. See the Script Editor for details.")
+                return False
+
+            dependency_collection = collect_dependencies(scene_path)
+            try:
+                publish = record_publish(
+                    scene_path,
+                    "render_scene",
+                    dependencies=dependency_collection.dependencies,
+                    dependency_errors=dependency_collection.errors,
+                )
+            except (OSError, TimeoutError, TypeError, ValueError):
+                LOGGER.exception(
+                    "Maya saved %s but JAM could not record publish metadata",
+                    scene_path,
+                )
+                cmds.warning(
+                    "The scene was saved, but its publish metadata could not be recorded. "
+                    "See the Script Editor for details."
+                )
+                return False
+    except (OSError, TimeoutError):
+        LOGGER.exception("JAM could not acquire the publish lock for %s", scene_path)
+        cmds.warning("Another publish is active or the scene publish lock is unavailable.")
         return False
 
+    message = "The scene was published successfully as {}.".format(publish["versionLabel"])
+    if publish["dependencyStatus"] == "incomplete":
+        message += " The dependency scan was incomplete; see the metadata pane."
+        cmds.warning("The scene was published with an incomplete dependency snapshot.")
     cmds.confirmDialog(
         title="Publish complete",
-        message="The scene was published successfully.",
+        message=message,
         button=["OK"],
     )
     return True

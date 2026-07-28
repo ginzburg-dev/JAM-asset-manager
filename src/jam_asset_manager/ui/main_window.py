@@ -1,5 +1,6 @@
 """Main Maya/Qt window for JAM Asset Manager."""
 
+import html
 import logging
 import os
 from typing import NamedTuple
@@ -15,7 +16,9 @@ from ..core.catalog import (
 )
 from ..core.config import JamConfig
 from ..core.constants import DEFAULT_EXCLUDED_NAMES, ICONS_PATH
-from ..core.reports import append_message, read_messages, render_history
+from ..core.metadata import MetadataError, read_metadata
+from ..core.publishing import render_publish_metadata
+from ..core.reports import append_message, render_history
 from ..maya import assets as maya_assets
 from ..maya import scenes as maya_scenes
 from .generated.main_window import Ui_MainWindow
@@ -146,9 +149,19 @@ class MainWindow(QMainWindow):
     def update_report_note(self):
         data = self.get_selected_item_data()
         self.ui.textBrowser_history.clear()
+        self.ui.textBrowser_metadata.clear()
         if not data:
             return
-        self.ui.textBrowser_history.setHtml(render_history(read_messages(data[1])))
+        try:
+            metadata = read_metadata(data[1])
+        except MetadataError as error:
+            LOGGER.error("Could not read metadata for %s: %s", data[1], error)
+            self.ui.textBrowser_metadata.setHtml(
+                "<p><b>Metadata unavailable</b><br>{}</p>".format(html.escape(str(error)))
+            )
+            return
+        self.ui.textBrowser_history.setHtml(render_history(metadata["messages"]))
+        self.ui.textBrowser_metadata.setHtml(render_publish_metadata(metadata["publishes"]))
 
     def save_selection_state(self, mode):
         """Persist the selected project, asset type, or episode."""

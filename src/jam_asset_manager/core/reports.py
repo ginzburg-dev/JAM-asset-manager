@@ -5,26 +5,14 @@ import html
 from datetime import datetime
 from pathlib import Path
 
-from .constants import ASSET_METADATA_TEMPLATE, REPORT_STYLES
-from .storage import read_json, update_json
-
-
-def metadata_path(path):
-    return Path(path).with_suffix(".json")
-
-
-def new_metadata():
-    return {
-        "assetName": ASSET_METADATA_TEMPLATE["assetName"],
-        "assetType": ASSET_METADATA_TEMPLATE["assetType"],
-        "createdTime": ASSET_METADATA_TEMPLATE["createdTime"],
-        "messages": [],
-    }
+from .constants import REPORT_STYLES
+from .metadata import metadata_path as metadata_path
+from .metadata import new_metadata as new_metadata
+from .metadata import read_metadata, update_metadata
 
 
 def append_message(path, asset_name, message_type, message, hours=0, user=None, now=None):
     """Append a note or report entry to an asset's sidecar metadata file."""
-    sidecar_path = metadata_path(path)
     created_time = (now or datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
     message_user = user or getpass.getuser()
 
@@ -45,11 +33,11 @@ def append_message(path, asset_name, message_type, message, hours=0, user=None, 
         )
         return data
 
-    return update_json(sidecar_path, add_message, default={})
+    return update_metadata(path, add_message)
 
 
 def read_messages(path):
-    metadata = read_json(metadata_path(path))
+    metadata = read_metadata(path)
     return metadata.get("messages", []) if isinstance(metadata, dict) else []
 
 

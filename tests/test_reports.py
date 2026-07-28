@@ -39,8 +39,11 @@ class ReportsTestCase(TemporaryProjectTestCase):
         append_message(asset_path, "asset", "note", "First", now=first_time)
         data = append_message(asset_path, "asset", "report", "Second", now=second_time)
         self.assertEqual(data["createdTime"], "23/07/2026 10:00:00")
+        self.assertEqual(data["assetType"], "ma")
+        self.assertEqual(data["schemaVersion"], 2)
+        self.assertEqual(data["publishes"], [])
         self.assertEqual(len(data["messages"]), 2)
-        self.assertEqual(metadata_path(asset_path), self.root / "asset.json")
+        self.assertEqual(metadata_path(asset_path), self.root / "asset.ma.json")
 
     def test_renderer_ignores_unknown_types_and_escapes_byline(self):
         messages = [

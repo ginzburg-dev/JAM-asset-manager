@@ -3,7 +3,9 @@
 import importlib
 import tempfile
 import unittest
+from contextlib import nullcontext
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import MagicMock, call, patch
 
 from tests.support import install_maya_stubs
@@ -18,8 +20,15 @@ class MayaSceneTestCase(unittest.TestCase):
         self.cmds = MagicMock()
         self.cmds_patcher = patch.object(maya_scenes, "cmds", self.cmds)
         self.cmds_patcher.start()
+        self.lock_patcher = patch.object(
+            maya_scenes,
+            "publish_lock",
+            side_effect=lambda _path: nullcontext(),
+        )
+        self.lock_patcher.start()
 
     def tearDown(self):
+        self.lock_patcher.stop()
         self.cmds_patcher.stop()
 
     def test_check_quality_accepts_minimum_resolution(self):
@@ -212,13 +221,78 @@ class MayaSceneTestCase(unittest.TestCase):
 
     def test_publish_scene_saves_and_confirms_success(self):
         self.cmds.file.side_effect = ["/shots/render.ma", None]
-        with patch.object(maya_scenes, "scene_check_message", return_value=[1, ""]):
+        dependencies = [{"kind": "reference", "path": "/shots/animation.ma"}]
+        with patch.object(
+            maya_scenes,
+            "scene_check_message",
+            return_value=[1, ""],
+        ), patch.object(
+            maya_scenes,
+            "collect_dependencies",
+            return_value=SimpleNamespace(dependencies=dependencies, errors=()),
+        ) as collect_dependencies, patch.object(
+            maya_scenes,
+            "record_publish",
+            return_value={"versionLabel": "v012", "dependencyStatus": "complete"},
+        ) as record_publish:
             self.assertTrue(maya_scenes.publish_scene())
+
         self.cmds.file.assert_any_call(save=True)
+        collect_dependencies.assert_called_once_with("/shots/render.ma")
+        record_publish.assert_called_once_with(
+            "/shots/render.ma",
+            "render_scene",
+            dependencies=dependencies,
+            dependency_errors=(),
+        )
         self.cmds.confirmDialog.assert_called_once_with(
             title="Publish complete",
-            message="The scene was published successfully.",
+            message="The scene was published successfully as v012.",
             button=["OK"],
+        )
+
+    def test_publish_scene_reports_metadata_failure_after_save(self):
+        self.cmds.file.side_effect = ["/shots/render.ma", None]
+        with patch.object(
+            maya_scenes,
+            "scene_check_message",
+            return_value=[1, ""],
+        ), patch.object(
+            maya_scenes,
+            "collect_dependencies",
+            return_value=SimpleNamespace(dependencies=(), errors=()),
+        ), patch.object(
+            maya_scenes,
+            "record_publish",
+            side_effect=TimeoutError("metadata lock unavailable"),
+        ):
+            with self.assertLogs(maya_scenes.LOGGER, level="ERROR"):
+                self.assertFalse(maya_scenes.publish_scene())
+
+        self.cmds.file.assert_any_call(save=True)
+        self.cmds.warning.assert_called_once_with(
+            "The scene was saved, but its publish metadata could not be recorded. "
+            "See the Script Editor for details."
+        )
+        self.cmds.confirmDialog.assert_not_called()
+
+    def test_publish_scene_stops_when_the_publish_lock_is_busy(self):
+        self.cmds.file.return_value = "/shots/render.ma"
+        with patch.object(
+            maya_scenes,
+            "scene_check_message",
+            return_value=[1, ""],
+        ), patch.object(
+            maya_scenes,
+            "publish_lock",
+            side_effect=TimeoutError("busy"),
+        ):
+            with self.assertLogs(maya_scenes.LOGGER, level="ERROR"):
+                self.assertFalse(maya_scenes.publish_scene())
+
+        self.assertNotIn(call(save=True), self.cmds.file.call_args_list)
+        self.cmds.warning.assert_called_once_with(
+            "Another publish is active or the scene publish lock is unavailable."
         )
 
 

@@ -32,11 +32,15 @@ DEFAULT_ICON_SIZE = 200
 DEFAULT_DENOISER_EXECUTABLE = "denoise"
 DENOISER_EXECUTABLE = os.getenv(DENOISER_EXECUTABLE_ENV, DEFAULT_DENOISER_EXECUTABLE)
 
+METADATA_SCHEMA_VERSION = 2
 ASSET_METADATA_TEMPLATE = {
+    "schemaVersion": METADATA_SCHEMA_VERSION,
     "assetName": "",
     "assetType": "",
     "createdTime": "",
     "messages": [],
+    "latestVersion": 0,
+    "publishes": [],
 }
 
 REPORT_STYLES = {

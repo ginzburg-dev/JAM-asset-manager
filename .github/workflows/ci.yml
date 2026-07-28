@@ -64,6 +64,3 @@ jobs:
 
       - name: Build Python distributions
         run: make build
-
-      - name: Build Maya release archive
-        run: make release

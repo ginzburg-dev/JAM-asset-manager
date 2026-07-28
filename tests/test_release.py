@@ -48,6 +48,12 @@ class ReleaseToolingTestCase(unittest.TestCase):
         )
         self.assertIn('--title "${GITHUB_REF_NAME}"', workflow)
 
+    def test_ci_does_not_build_a_custom_release_archive(self):
+        workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "ci.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertNotIn("make release", workflow)
+
     def test_generated_ui_imports_are_normalized(self):
         source = """from PySide6.QtCore import (Qt, QSize)
 from PySide6.QtWidgets import (QSizePolicy, QWidget)

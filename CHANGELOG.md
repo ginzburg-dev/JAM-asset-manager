@@ -1,43 +1,21 @@
 # Changelog
 
-All notable changes to JAM Asset Manager are documented in this file.
+Notable changes for each release.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [0.2.0]
 
-## [Unreleased]
+- Versioned publishes with JSON metadata.
+- Dependency tracking for Maya scenes, textures, caches, UDIMs, and sequences.
+- Publish history and missing-file warnings in the Maya UI.
+- Safer publishing with per-scene locks and atomic metadata writes.
 
 ## [0.1.0] - 2026-07-28
 
-### Added
+- First public release.
+- Multi-project asset and shot browser for Maya.
+- Scene creation, validation, importing, and publishing.
+- Shared configuration, production notes, and time reports.
+- PySide2/PySide6 support, tests, CI, and automated releases.
 
-- Maya-integrated browsing for production assets, animation shots, and render
-  scenes.
-- Render-scene creation, opening, updating, validation, and publishing workflows.
-- Asset importing and publishing with explicit validation and error reporting.
-- Notes and time reports stored as sidecar JSON metadata.
-- Environment-driven, injectable configuration with per-user selection state.
-- PySide2 and PySide6 compatibility for supported Maya generations.
-- Optional RenderMan denoising helpers for compatible legacy pipelines.
-- Automated tests for configuration, storage, catalog, Maya adapters, UI
-  integration, reporting, and release tooling.
-- Continuous integration and merge-driven GitHub Releases using GitHub's
-  standard ZIP and tar.gz source archives.
-
-### Changed
-
-- Project versions are declared explicitly in `pyproject.toml` and `JAM.mod`;
-  CI validates that both declarations match before a release.
-- `make sync-version` updates Maya module metadata from the canonical project
-  version.
-
-### Security
-
-- Atomic JSON writes and locking protect shared metadata from partial or
-  concurrent updates.
-- Report content is HTML-escaped before rendering.
-- Asset traversal avoids following directory symlinks.
-- Maya file operations validate paths and avoid unintended overwrites.
-
-[Unreleased]: https://github.com/ginzburg-dev/JAM-asset-manager/compare/v0.1.0...HEAD
+[0.2.0]: https://github.com/ginzburg-dev/JAM-asset-manager/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/ginzburg-dev/JAM-asset-manager/releases/tag/v0.1.0

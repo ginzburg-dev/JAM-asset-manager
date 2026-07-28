@@ -97,6 +97,62 @@ class ApplicationTestCase(unittest.TestCase):
             self.assertTrue(main_window.MainWindow.check_element(window))
         check_asset.assert_called_once_with()
 
+    def test_selected_item_updates_history_and_publish_metadata_panes(self):
+        history = MagicMock()
+        metadata = MagicMock()
+        window = SimpleNamespace(
+            ui=SimpleNamespace(
+                textBrowser_history=history,
+                textBrowser_metadata=metadata,
+            ),
+            get_selected_item_data=lambda: ("asset", "/assets/model.ma"),
+        )
+        with patch.object(
+            main_window,
+            "read_metadata",
+            return_value={
+                "messages": [{"type": "note"}],
+                "publishes": [{"version": 1}],
+            },
+        ) as read_metadata, patch.object(
+            main_window,
+            "render_history",
+            return_value="<p>history</p>",
+        ), patch.object(
+            main_window,
+            "render_publish_metadata",
+            return_value="<p>v001</p>",
+        ):
+            main_window.MainWindow.update_report_note(window)
+
+        history.clear.assert_called_once_with()
+        metadata.clear.assert_called_once_with()
+        read_metadata.assert_called_once_with("/assets/model.ma")
+        history.setHtml.assert_called_once_with("<p>history</p>")
+        metadata.setHtml.assert_called_once_with("<p>v001</p>")
+
+    def test_metadata_schema_errors_are_rendered_without_breaking_selection(self):
+        history = MagicMock()
+        metadata = MagicMock()
+        window = SimpleNamespace(
+            ui=SimpleNamespace(
+                textBrowser_history=history,
+                textBrowser_metadata=metadata,
+            ),
+            get_selected_item_data=lambda: ("asset", "/assets/model.ma"),
+        )
+        with patch.object(
+            main_window,
+            "read_metadata",
+            side_effect=main_window.MetadataError("<future schema>"),
+        ), self.assertLogs(main_window.LOGGER, level="ERROR"):
+            main_window.MainWindow.update_report_note(window)
+
+        history.setHtml.assert_not_called()
+        rendered = metadata.setHtml.call_args[0][0]
+        self.assertIn("Metadata unavailable", rendered)
+        self.assertIn("&lt;future schema&gt;", rendered)
+
     def test_report_dialog_keeps_its_original_target(self):
         dialog = object.__new__(report_dialog.ReportDialog)
         dialog.selected_item = ("original", "/assets/original.ma")

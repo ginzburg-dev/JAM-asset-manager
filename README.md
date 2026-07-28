@@ -225,10 +225,11 @@ generations, then checks formatting and packaging. A tag such as `v0.1.0`
 automatically creates a GitHub Release containing a compact, versioned Maya-module
 ZIP and its SHA-256 checksum.
 
-Before tagging, update the matching version in `pyproject.toml` and `JAM.mod`,
-then run:
+Before tagging, update `version` in `pyproject.toml`, move the changelog entries
+into a dated release section, then run:
 
 ```bash
+make sync-version
 make check
 make build
 make release

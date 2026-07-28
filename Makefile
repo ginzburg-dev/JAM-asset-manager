@@ -2,13 +2,14 @@ PYTHON ?= python3
 RUFF ?= ruff
 MAYAPY ?= mayapy
 
-.PHONY: help setup init-config install lint format test compile check build release ui
+.PHONY: help setup init-config install sync-version lint format test compile check build release ui
 
 help:
 	@echo "Available targets:"
 	@echo "  setup        Create config.json and print Maya module setup"
 	@echo "  init-config  Copy config.example.json without overwriting"
 	@echo "  install      Install an editable package with MAYAPY"
+	@echo "  sync-version Synchronize JAM.mod from pyproject.toml"
 	@echo "  lint         Run Ruff lint and formatting checks"
 	@echo "  format       Format source code and tests"
 	@echo "  test         Run the unit test suite"
@@ -33,6 +34,9 @@ init-config:
 install:
 	$(MAYAPY) -m pip install --editable .
 
+sync-version:
+	$(PYTHON) -m scripts.sync_version
+
 lint:
 	$(RUFF) check --no-cache src tests scripts
 	$(RUFF) format --check --no-cache src tests scripts
@@ -53,8 +57,8 @@ check: lint test compile
 build:
 	$(PYTHON) -m build
 
-release:
-	$(PYTHON) scripts/build_release.py
+release: sync-version
+	$(PYTHON) -m scripts.build_release
 
 ui:
 	$(PYTHON) scripts/generate_ui.py

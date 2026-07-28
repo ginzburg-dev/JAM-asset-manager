@@ -42,6 +42,8 @@ Keep unrelated changes in separate commits.
 
 Maintainers create releases from semantic-version tags. Before tagging, move the
 relevant entries from `Unreleased` into a dated section in `CHANGELOG.md`. The
-version in `pyproject.toml` and `JAM.mod` must match the tag without its leading
-`v`. Pushing the tag starts the release workflow; contributors should not change
-the version unless the change is intended for a release.
+version is edited only in `pyproject.toml`; run `make sync-version` to update the
+required Maya module metadata. The resulting project and `JAM.mod` versions must
+match the tag without its leading `v`. Pushing the tag starts the release
+workflow; contributors should not change the version unless the change is
+intended for a release.

@@ -6,8 +6,9 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from scripts.build_release import build_archive, project_version, validate_version
+from scripts.build_release import build_archive
 from scripts.generate_ui import normalize_generated_source
+from scripts.versioning import project_version, sync_module_version, validate_version
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 
@@ -43,6 +44,29 @@ class ReleaseToolingTestCase(unittest.TestCase):
     def test_release_rejects_a_mismatched_tag(self):
         with self.assertRaisesRegex(RuntimeError, "does not match"):
             validate_version("v9.9.9")
+
+    def test_maya_module_version_is_synchronized_from_pyproject(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pyproject_path = root / "pyproject.toml"
+            module_path = root / "JAM.mod"
+            pyproject_path.write_text(
+                '[project]\nname = "example"\nversion = "1.2.3"\n',
+                encoding="utf-8",
+            )
+            module_path.write_text(
+                "+ JAM 0.0.0 .\nPYTHONPATH +:= src\n",
+                encoding="utf-8",
+            )
+
+            version, changed = sync_module_version(pyproject_path, module_path)
+
+            self.assertEqual(version, "1.2.3")
+            self.assertTrue(changed)
+            self.assertEqual(
+                module_path.read_text(encoding="utf-8"),
+                "+ JAM 1.2.3 .\nPYTHONPATH +:= src\n",
+            )
 
     def test_release_title_matches_the_version_tag(self):
         workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "release.yml").read_text(

@@ -58,7 +58,7 @@ jobs:
         run: make check build
 
       - name: Build versioned Maya archive
-        run: python scripts/build_release.py --expected-version "${GITHUB_REF_NAME}"
+        run: python -m scripts.build_release --expected-version "${GITHUB_REF_NAME}"
 
       - name: Create GitHub release
         env:

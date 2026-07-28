@@ -2,11 +2,11 @@
 """Build a deterministic Maya-module release archive."""
 
 import argparse
-import ast
 import hashlib
-import re
 import zipfile
 from pathlib import Path
+
+from .versioning import validate_version
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_ROOT = REPOSITORY_ROOT / "src" / "jam_asset_manager"
@@ -20,59 +20,7 @@ ROOT_FILES = (
     REPOSITORY_ROOT / "config.example.json",
     REPOSITORY_ROOT / "pyproject.toml",
 )
-SEMANTIC_VERSION = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
 ZIP_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
-
-
-def project_version():
-    """Read the static project version without requiring a TOML dependency."""
-    pyproject_path = REPOSITORY_ROOT / "pyproject.toml"
-    section = None
-    for source_line in pyproject_path.read_text(encoding="utf-8").splitlines():
-        line = source_line.strip()
-        if line.startswith("[") and line.endswith("]"):
-            section = line[1:-1].strip()
-            continue
-        if section != "project" or not line.startswith("version"):
-            continue
-        key, separator, raw_value = line.partition("=")
-        if separator and key.strip() == "version":
-            version = ast.literal_eval(raw_value.strip())
-            if isinstance(version, str):
-                return version
-    raise RuntimeError("Could not find [project].version in {}".format(pyproject_path))
-
-
-def module_version():
-    """Read the version declared in the Maya module definition."""
-    first_line = (REPOSITORY_ROOT / "JAM.mod").read_text(encoding="utf-8").splitlines()[0]
-    fields = first_line.split()
-    if len(fields) < 3 or fields[0] != "+" or fields[1] != "JAM":
-        raise RuntimeError("JAM.mod must begin with '+ JAM <version> <path>'")
-    return fields[2]
-
-
-def validate_version(expected_version=None):
-    """Validate project, Maya-module, and optional tag versions."""
-    version = project_version()
-    if not isinstance(version, str) or not SEMANTIC_VERSION.fullmatch(version):
-        raise RuntimeError("Invalid project version: {!r}".format(version))
-    if module_version() != version:
-        raise RuntimeError("JAM.mod version does not match package version {}".format(version))
-
-    normalized_expected = (
-        expected_version[1:]
-        if expected_version and expected_version.startswith("v")
-        else expected_version
-    )
-    if normalized_expected and normalized_expected != version:
-        raise RuntimeError(
-            "Release tag version {} does not match package version {}".format(
-                normalized_expected,
-                version,
-            )
-        )
-    return version
 
 
 def release_files():

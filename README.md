@@ -206,7 +206,6 @@ Run the local quality checks from the repository root:
 ```bash
 make check
 make build
-make release
 ```
 
 The test suite uses Python's standard `unittest` framework. Maya, PySide, and
@@ -222,8 +221,8 @@ may require site-specific commands and executable paths.
 
 CI runs the test suite against Python versions representing supported Maya
 generations, then checks formatting and packaging. A tag such as `v0.1.0`
-automatically creates a GitHub Release containing a compact, versioned Maya-module
-ZIP and its SHA-256 checksum.
+automatically creates a GitHub Release. GitHub provides source archives in ZIP
+and tar.gz formats for every release.
 
 Before tagging, update `version` in `pyproject.toml`, move the changelog entries
 into a dated release section, then run:
@@ -232,7 +231,6 @@ into a dated release section, then run:
 make sync-version
 make check
 make build
-make release
 git tag v0.1.0
 git push origin v0.1.0
 ```

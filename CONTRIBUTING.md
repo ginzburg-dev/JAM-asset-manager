@@ -32,7 +32,6 @@ Before opening a pull request, run:
 ```bash
 make check
 make build
-make release
 ```
 
 Use a short, imperative commit subject such as `Prevent render scene overwrite`.

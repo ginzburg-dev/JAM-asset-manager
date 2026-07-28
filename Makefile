@@ -2,7 +2,7 @@ PYTHON ?= python3
 RUFF ?= ruff
 MAYAPY ?= mayapy
 
-.PHONY: help setup init-config install sync-version lint format test compile check build release ui
+.PHONY: help setup init-config install sync-version lint format test compile check build ui
 
 help:
 	@echo "Available targets:"
@@ -16,7 +16,6 @@ help:
 	@echo "  compile      Compile source and tests"
 	@echo "  check        Run all local quality checks"
 	@echo "  build        Build wheel and source distributions"
-	@echo "  release      Build the versioned Maya release archive"
 	@echo "  ui           Regenerate Qt forms with PySide compatibility"
 
 setup: init-config
@@ -56,9 +55,6 @@ check: lint test compile
 
 build:
 	$(PYTHON) -m build
-
-release: sync-version
-	$(PYTHON) -m scripts.build_release
 
 ui:
 	$(PYTHON) scripts/generate_ui.py

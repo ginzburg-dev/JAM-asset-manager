@@ -12,7 +12,12 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Project versions are declared explicitly in `pyproject.toml` and validated
   against the required Maya module version in `JAM.mod`.
 - `make sync-version` updates Maya module metadata from the canonical project
-  version, and release builds run the synchronization automatically.
+  version.
+
+### Removed
+
+- Custom release ZIP and checksum generation in favor of GitHub's automatic
+  source archives.
 
 ## [0.1.0] - 2026-07-28
 

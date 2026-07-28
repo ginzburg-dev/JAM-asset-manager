@@ -57,15 +57,14 @@ jobs:
       - name: Run release checks
         run: make check build
 
-      - name: Build versioned Maya archive
-        run: python -m scripts.build_release --expected-version "${GITHUB_REF_NAME}"
+      - name: Validate release version
+        run: python -m scripts.versioning --expected-version "${GITHUB_REF_NAME}"
 
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: >-
           gh release create "${GITHUB_REF_NAME}"
-          dist/release/*
           --generate-notes
           --title "${GITHUB_REF_NAME}"
           --verify-tag

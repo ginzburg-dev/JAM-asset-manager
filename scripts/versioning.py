@@ -1,5 +1,6 @@
 """Project and Maya module version helpers."""
 
+import argparse
 import ast
 import re
 from pathlib import Path
@@ -94,3 +95,15 @@ def validate_version(
             )
         )
     return version
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--expected-version", required=True)
+    arguments = parser.parse_args()
+    version = validate_version(arguments.expected_version)
+    print("Validated release version {}".format(version))
+
+
+if __name__ == "__main__":
+    main()

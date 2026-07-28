@@ -149,7 +149,7 @@ class ApplicationTestCase(unittest.TestCase):
             main_window.MainWindow.update_report_note(window)
 
         history.setHtml.assert_not_called()
-        rendered = metadata.setHtml.call_args.args[0]
+        rendered = metadata.setHtml.call_args[0][0]
         self.assertIn("Metadata unavailable", rendered)
         self.assertIn("&lt;future schema&gt;", rendered)
 

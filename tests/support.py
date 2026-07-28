@@ -6,8 +6,6 @@ import types
 import unittest
 from pathlib import Path
 
-from jam_asset_manager.core.storage import write_json
-
 
 class PlaceholderMeta(type):
     def __getattr__(cls, _name):
@@ -95,3 +93,9 @@ def install_qt_stubs():
 
     for module_name in ("shiboken6", "shiboken2"):
         sys.modules[module_name] = DynamicModule(module_name)
+
+
+install_maya_stubs()
+install_qt_stubs()
+
+from jam_asset_manager.core.storage import write_json  # noqa: E402

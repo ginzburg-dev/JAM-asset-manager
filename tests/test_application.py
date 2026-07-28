@@ -13,12 +13,16 @@ from tests.support import install_maya_stubs, install_qt_stubs
 install_maya_stubs()
 install_qt_stubs()
 
+jam_asset_manager = importlib.import_module("jam_asset_manager")
 application = importlib.import_module("jam_asset_manager.application")
 main_window = importlib.import_module("jam_asset_manager.ui.main_window")
 report_dialog = importlib.import_module("jam_asset_manager.ui.report_dialog")
 
 
 class ApplicationTestCase(unittest.TestCase):
+    def test_public_run_is_the_application_entry_point(self):
+        self.assertIs(jam_asset_manager.run, application.run)
+
     def test_run_injects_config_and_parents_window_to_maya(self):
         config = object()
         maya_parent = object()

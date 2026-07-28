@@ -99,10 +99,10 @@ def validate_version(
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--expected-version", required=True)
+    parser.add_argument("--expected-version")
     arguments = parser.parse_args()
     version = validate_version(arguments.expected_version)
-    print("Validated release version {}".format(version))
+    print(version)
 
 
 if __name__ == "__main__":

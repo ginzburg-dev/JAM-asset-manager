@@ -21,13 +21,13 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Optional RenderMan denoising helpers for compatible legacy pipelines.
 - Automated tests for configuration, storage, catalog, Maya adapters, UI
   integration, reporting, and release tooling.
-- Continuous integration and tag-based GitHub Releases using GitHub's standard
-  ZIP and tar.gz source archives.
+- Continuous integration and merge-driven GitHub Releases using GitHub's
+  standard ZIP and tar.gz source archives.
 
 ### Changed
 
-- Project versions are declared explicitly in `pyproject.toml` and validated
-  against the required Maya module version in `JAM.mod`.
+- Project versions are declared explicitly in `pyproject.toml` and `JAM.mod`;
+  CI validates that both declarations match before a release.
 - `make sync-version` updates Maya module metadata from the canonical project
   version.
 

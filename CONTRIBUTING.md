@@ -39,10 +39,14 @@ Keep unrelated changes in separate commits.
 
 ## Releases
 
-Maintainers create releases from semantic-version tags. Before tagging, move the
-relevant entries from `Unreleased` into a dated section in `CHANGELOG.md`. The
-version is edited only in `pyproject.toml`; run `make sync-version` to update the
-required Maya module metadata. The resulting project and `JAM.mod` versions must
-match the tag without its leading `v`. Pushing the tag starts the release
-workflow; contributors should not change the version unless the change is
-intended for a release.
+Maintainers publish releases by merging a release pull request into `main`.
+Before merging, move the relevant entries from `Unreleased` into a dated section
+in `CHANGELOG.md` and update the version in both `[project].version` in
+`pyproject.toml` and the first line of `JAM.mod`. `make sync-version` can update
+the latter after the project version changes.
+
+CI rejects mismatched versions. After CI succeeds on `main`, the release workflow
+creates the matching `vX.Y.Z` tag and GitHub Release. If that version already
+exists, the workflow leaves its tag and release unchanged. Contributors should
+not change either version unless the pull request is intended to publish a
+release.

@@ -5,7 +5,12 @@ import unittest
 from pathlib import Path
 
 from scripts.generate_ui import normalize_generated_source
-from scripts.versioning import project_version, sync_module_version, validate_version
+from scripts.versioning import (
+    module_version,
+    project_version,
+    sync_module_version,
+    validate_version,
+)
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 
@@ -15,9 +20,30 @@ class ReleaseToolingTestCase(unittest.TestCase):
         pyproject = (REPOSITORY_ROOT / "pyproject.toml").read_text(encoding="utf-8")
         self.assertIn('version = "{}"'.format(project_version()), pyproject)
 
+    def test_repository_versions_match(self):
+        self.assertEqual(project_version(), module_version())
+        self.assertEqual(validate_version(), project_version())
+
     def test_release_rejects_a_mismatched_tag(self):
         with self.assertRaisesRegex(RuntimeError, "does not match"):
             validate_version("v9.9.9")
+
+    def test_release_rejects_mismatched_project_and_module_versions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pyproject_path = root / "pyproject.toml"
+            module_path = root / "JAM.mod"
+            pyproject_path.write_text(
+                '[project]\nname = "example"\nversion = "1.2.3"\n',
+                encoding="utf-8",
+            )
+            module_path.write_text("+ JAM 1.2.4 .\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(RuntimeError, "JAM.mod version does not match"):
+                validate_version(
+                    pyproject_path=pyproject_path,
+                    module_path=module_path,
+                )
 
     def test_maya_module_version_is_synchronized_from_pyproject(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -42,11 +68,22 @@ class ReleaseToolingTestCase(unittest.TestCase):
                 "+ JAM 1.2.3 .\nPYTHONPATH +:= src\n",
             )
 
-    def test_release_title_matches_the_version_tag(self):
+    def test_release_runs_after_successful_main_ci(self):
         workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "release.yml").read_text(
             encoding="utf-8"
         )
-        self.assertIn('--title "${GITHUB_REF_NAME}"', workflow)
+        self.assertIn("workflow_run:", workflow)
+        self.assertIn("github.event.workflow_run.conclusion == 'success'", workflow)
+        self.assertIn("github.event.workflow_run.head_sha", workflow)
+
+    def test_release_uses_matching_metadata_and_version_tag(self):
+        workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("python -m scripts.versioning", workflow)
+        self.assertIn('git push origin "${TAG}"', workflow)
+        self.assertIn('gh release create "${TAG}"', workflow)
+        self.assertIn('--title "${TAG}"', workflow)
 
     def test_ci_does_not_build_a_custom_release_archive(self):
         workflow = (REPOSITORY_ROOT / ".github" / "workflows" / "ci.yml").read_text(

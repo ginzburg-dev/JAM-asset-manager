@@ -220,22 +220,30 @@ may require site-specific commands and executable paths.
 ## Releases
 
 CI runs the test suite against Python versions representing supported Maya
-generations, then checks formatting and packaging. A tag such as `v0.1.0`
-automatically creates a GitHub Release. GitHub provides source archives in ZIP
-and tar.gz formats for every release.
+generations, then checks formatting and packaging. When CI succeeds on `main`,
+the release workflow reads the version from `pyproject.toml`, verifies that
+`JAM.mod` contains the same version, and creates the matching tag and GitHub
+Release automatically. GitHub provides source archives in ZIP and tar.gz formats
+for every release.
 
-Before tagging, update `version` in `pyproject.toml`, move the changelog entries
-into a dated release section, then run:
+To publish a new version, update both version declarations in the release pull
+request:
+
+- `version` under `[project]` in `pyproject.toml`
+- the version after `JAM` on the first line of `JAM.mod`
+
+Move the changelog entries from `Unreleased` into a dated release section and
+run:
 
 ```bash
-make sync-version
 make check
 make build
-git tag v0.1.0
-git push origin v0.1.0
 ```
 
-The workflow rejects tags that do not match the package and Maya-module versions.
+`make sync-version` is available as a convenience after editing
+`pyproject.toml`, but both changed files must be committed in the pull request.
+If the two versions differ, CI and the release workflow fail without creating a
+tag. Merging a version that already has a release does not publish it again.
 Release notes are generated from merged pull requests and their labels.
 
 See [CHANGELOG.md](CHANGELOG.md) for version history,
